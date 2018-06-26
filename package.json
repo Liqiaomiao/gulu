@@ -1,0 +1,23 @@
+{
+  "name": "gulu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liqiaomiao/gulu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Liqiaomiao/gulu/issues"
+  },
+  "homepage": "https://github.com/Liqiaomiao/gulu#readme",
+  "dependencies": {
+    "parcel": "^1.9.2",
+    "vue": "^2.5.16"
+  }
+}
