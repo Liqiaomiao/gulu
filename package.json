@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/Liqiaomiao/gulu#readme",
   "dependencies": {
-    "parcel": "^1.9.2",
     "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "parcel": "^1.9.2",
+    "parcel-bundler": "^1.9.3"
   }
 }
