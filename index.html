@@ -9,30 +9,46 @@
 </head>
 <body>
 <div id="app">
-    <g-button>按钮</g-button>
+    <g-button icon="settings">
+        我爱svg
+    </g-button>
+    <g-button icon="settings"  icon-position="right">
+        我爱svg
+    </g-button>
 </div>
 <style>
-    *{
-        margin:0;padding:0 ;box-sizing: border-box;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    :root{
-        --button-height:32px;
-        --button-bg:white;
-        --button-active-bg:#eee;
-        --font-size:14px;
-        --border-radius:4px;
-        --color:#999;
-        --border-color:#999;
-        --border-color-hover:#666;
+
+    :root {
+        --button-height: 32px;
+        --button-bg: white;
+        --button-active-bg: #eee;
+        --font-size: 14px;
+        --border-radius: 4px;
+        --color: #999;
+        --border-color: #999;
+        --border-color-hover: #666;
     }
-    body{
+
+    body {
         font-size: var(--font-size);
     }
-    #app{
-        margin:20px;
+
+    #app {
+        margin: 20px;
     }
 </style>
-
+<style>
+    .icon {
+        height: 1em;
+        width: 1em;
+    }
+</style>
 <script src="./src/app.js"></script>
+<script src="//at.alicdn.com/t/font_730299_0q1lgj3th9u.js"></script>
 </body>
 </html>
