@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="app" icon="settings">
-    <g-button  icon="loading"  icon-position="right">
+    <g-button  :loading="loading" @click="loading=!loading">
         按钮
     </g-button>
     <g-button icon="settings"  icon-position="right">

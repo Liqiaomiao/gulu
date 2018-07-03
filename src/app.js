@@ -7,5 +7,8 @@ import Icon from './icon.vue'
 Vue.component('g-button',Button);
 Vue.component('g-icon',Icon);
 new Vue({
-    el:"#app"
+    el:"#app",
+    data:{
+        loading:true
+    }
 });
