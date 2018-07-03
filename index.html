@@ -9,10 +9,13 @@
 </head>
 <body>
 <div id="app" icon="settings">
+    <g-button  icon="loading"  icon-position="right">
+        按钮
+    </g-button>
     <g-button icon="settings"  icon-position="right">
         按钮
     </g-button>
-    <g-icon name="loading"></g-icon>
+
 </div>
 <style>
     * {
@@ -40,7 +43,16 @@
         margin: 20px;
     }
 </style>
-
+<style>
+    @keyframes spin{
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+</style>
 <script src="./src/app.js"></script>
 <script src="//at.alicdn.com/t/font_730299_drdjma0m2c8.js"></script>
 </body>

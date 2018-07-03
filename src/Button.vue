@@ -1,50 +1,8 @@
-<style lang="scss">
-    .g-button{
-        vertical-align: middle;
-        height:var(--button-height);
-        font:inherit;
-        border-radius: var(--border-radius);
-        border:1px solid var(--border-color);
-        background: var(--button-bg);
-        padding: 0 1em;
-        display: inline-flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
-        padding:0 1em;
-
-        &:hover{
-            border-color: var(--border-color-hover);
-         }
-        &:active{
-             background: var(--button-active-bg);
-        }
-        &:focus{
-             outline: none;
-        }
-         > .icon{
-            order:1;
-            margin-right: .1em;
-           }
-          > .content{
-            order:2
-            }
-        &.icon-right{
-            > .icon{
-                order:2;
-                margin-right:0;
-                margin-left:.1em
-              }
-            > .content{
-                order:1
-              }
-          }
-    }
-</style>
 <template>
     <div>
         <button class="g-button" :class="{[`icon-${iconPosition}`]:true}">
             <g-icon :name="icon"></g-icon>
+            <g-icon class="loading" name="loading"></g-icon>
             <div class="content">
                 <slot></slot>
             </div>
@@ -61,13 +19,65 @@
                 type:String,
                 default:'left',
                 validator(value){
-                    if(value!='left'&&value!='right' ){
-                        return false
-                    }else{
-                        return true
-                    }
+                    return value == 'left' || value == 'right';
                 }
             }
         }
     }
 </script>
+<style lang="scss" >
+    @keyframes spin{
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+    .loading{
+        width: 1em;
+        height: 1em;
+        animation:spin  2s infinite linear;
+    }
+    .g-button{
+        vertical-align: middle;
+        height:var(--button-height);
+        font:inherit;
+        border-radius: var(--border-radius);
+        border:1px solid var(--border-color);
+        background: var(--button-bg);
+        padding: 0 1em;
+        display: inline-flex;
+        justify-content: center;
+        vertical-align: middle;
+        align-items: center;
+        padding:0 1em;
+
+    &:hover{
+         border-color: var(--border-color-hover);
+     }
+    &:active{
+         background: var(--button-active-bg);
+     }
+    &:focus{
+         outline: none;
+     }
+    > .icon{
+          order:1;
+          margin-right: .1em;
+      }
+    > .content{
+          order:2
+      }
+    &.icon-right{
+    > .icon{
+          order:2;
+          margin-right:0;
+          margin-left:.1em
+      }
+    > .content{
+          order:1
+      }
+    }
+    }
+</style>
