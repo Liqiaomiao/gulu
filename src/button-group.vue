@@ -36,6 +36,7 @@
     & >button:first-child{
         border-top-left-radius: var(--border-radius);
         border-bottom-left-radius: var(--border-radius);
+        margin-left: 0;
        }
     & >button:last-child{
            border-top-right-radius: var(--border-radius);
