@@ -8,6 +8,14 @@
     export default{
         data(){
             return {}
+        },
+        mounted(){
+            for (let node of this.$el.children){
+                let  name = node.nodeName.toLowerCase();
+                if(name!='button'){
+                    console.warn(`g-button-group 的子元素应该全是g-button,但是你写的是${name}`)
+                }
+            }
         }
     }
 </script>
@@ -19,10 +27,10 @@
          margin-left:-1px;
         border-radius: 0;
         &:hover{
-            border: 1px solid #40a9ff;
+            border: 1px solid var(--border-color-hover);
             position: relative;
             z-index: 1;
-            transition: 2s;
+            transition: 1s;
          }
        }
     & >button:first-child{
