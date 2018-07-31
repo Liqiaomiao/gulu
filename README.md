@@ -46,10 +46,7 @@ export default {
   }
 }
 ```
-4. 引入svg symbols
-```
 
-```
 ## 文档
 
 ## 提问
