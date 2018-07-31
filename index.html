@@ -9,23 +9,29 @@
 </head>
 <body>
 <div id="app" icon="settings">
-    <g-button  :loading="loading" @click="loading=!loading">
-        按钮
-    </g-button>
-    <g-button icon="settings"  icon-position="right">
-        按钮
-    </g-button>
-    <g-button-group>
-        <g-button  icon="left">
-            上一页
+    <g-input value="zhangsan" disabled></g-input>
+    <g-input value="zhangsan" readonly></g-input>
+    <g-input value="zhangsan"></g-input>
+    <g-input value="王五" error="姓名不能少于两个字"></g-input>
+    <div style="margin:20px;">
+        <g-button  :loading="loading" @click="loading=!loading">
+            按钮
         </g-button>
-        <g-button>更多</g-button>
-        <g-button  icon="right">
-            下一页
+        <g-button icon="settings"  icon-position="right">
+            按钮
         </g-button>
-    </g-button-group>
-    <!--<g-input error="你错了"></g-input>-->
-    <div id="test"></div>
+        <g-button-group>
+            <g-button  icon="left">
+                上一页
+            </g-button>
+            <g-button>更多</g-button>
+            <g-button  icon="right">
+                下一页
+            </g-button>
+        </g-button-group>
+    </div>
+
+
 </div>
 <style>
     * {
