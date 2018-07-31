@@ -4,6 +4,7 @@
                :value="value"
                :disabled="disabled"
                :readonly="readonly"
+               @change="$emit('change',$event,'lingyige')"
         />
         <template v-if="error">
             <Icon   name="error" class="icon-error"></Icon>
