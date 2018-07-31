@@ -5,6 +5,9 @@
                :disabled="disabled"
                :readonly="readonly"
                @change="$emit('change',$event,'lingyige')"
+               @input="$emit('input',$event,'lingyige')"
+               @blur="$emit('blur',$event,'lingyige')"
+               @focus="$emit('focus',$event,'lingyige')"
         />
         <template v-if="error">
             <Icon   name="error" class="icon-error"></Icon>
