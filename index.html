@@ -9,10 +9,11 @@
 </head>
 <body>
 <div id="app" icon="settings">
-    <g-input value="zhangsan" disabled></g-input>
+    <g-input value="zhangsan"  disabled></g-input>
     <g-input value="zhangsan" readonly></g-input>
-    <g-input value="zhangsan" @change="inputChange"></g-input>
-    <g-input value="王五" error="姓名不能少于两个字"></g-input>
+    <g-input value="zhangsan" v-model="message" @change="inputChange"></g-input>
+    {{message}}
+    <g-input value="王五"  error="姓名不能少于两个字"></g-input>
     <div style="margin:20px;">
         <g-button  :loading="loading" @click="loading=!loading">
             按钮
