@@ -9,6 +9,7 @@
 </head>
 <body>
 <div id="app" icon="settings">
+    <button @click="showToast">to toast</button>
     <g-input value="zhangsan"  disabled></g-input>
     <g-input value="zhangsan" readonly></g-input>
     <g-input value="zhangsan" v-model="message" @change="inputChange"></g-input>
