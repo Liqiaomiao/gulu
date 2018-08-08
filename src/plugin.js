@@ -4,17 +4,14 @@
 import Toast from './toast.vue'
 export default {
     install(Vue,options){
-        Vue.prototype.$toast=function (e,toastOptions) {
+        Vue.prototype.$toast=function (msg,toastOptions) {
          let Constructor=Vue.extend(Toast);
-         let toast = new Constructor(
+            let toast = new Constructor(
              {
-                 propsData:{
-                     closeButton:toastOptions.closeButton
-
-                 }
+                 propsData: toastOptions
              }
          );
-         toast.$slots.default = [e];
+            toast.$slots.default=[msg];
          toast.$mount();
          document.body.appendChild(toast.$el);
         }

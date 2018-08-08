@@ -23,11 +23,11 @@ new Vue({
             console.log(e,xxx)
         },
         showToast(){
-            this.$toast('abc',{
+            this.$toast('ok<a href="http://qq.com">qq</a>',{
                 closeButton:{
                     text:"知道了",
                     callback(toast){
-                        toast.log()
+                        toast.log();
                         console.log('用户说他知道了');
                     }
                 }
