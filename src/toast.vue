@@ -1,11 +1,51 @@
 <template>
     <div class="toast">
         <slot></slot>
+        <template v-if="closeButton">
+            <div class="line"></div>
+            <span class="close" @click="onClickClose">{{closeButton.text}}</span>
+        </template>
     </div>
 </template>
 <script>
     export default{
         name:'toast',
+        props:{
+            autoClose:{
+                type:Boolean,
+                default:true
+            },
+            autoCloseDelay:{
+                type:Number,
+                default:5
+            },
+            closeButton:{
+                type:Object,
+                default:()=>({
+                    text:'关闭',
+                    callback:(toast)=>{
+                        toast.close()
+                    }
+                })
+            }
+        },
+        mounted(){
+            if(this.autoClose){
+                setTimeout(()=>{
+                    this.close()
+                },this.autoCloseDelay*1000)
+            }
+        },
+        methods:{
+            close(){
+                this.$el.remove();
+                this.$destroy();
+            },
+            onClickClose(){
+                this.close()
+                this.closeButton.callback(this)
+            }
+        },
         data(){
             return {}
         }
@@ -30,6 +70,15 @@
         border-radius: 4px;
         box-shadow: 0 0 3px 0 rgba(0,0,0,.5);
         padding: 0 16px;
+        .line{
+            height: 100%;
+            border-left: 1px solid #666 ;
+            margin-left: 16px;
+        }
+        .close{
+            padding-left: 16px;
+
+        }
     }
 </style>
 
