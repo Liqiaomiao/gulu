@@ -11,7 +11,7 @@ Vue.component('g-button',Button);
 Vue.component('g-icon',Icon);
 Vue.component('g-button-group',ButtonGroup);
 Vue.component('g-input',Input);
-Vue.use(plugin)
+Vue.use(plugin);
 new Vue({
     el:"#app",
     data:{
@@ -23,7 +23,15 @@ new Vue({
             console.log(e,xxx)
         },
         showToast(){
-            this.$toast('abc')
+            this.$toast('abc',{
+                closeButton:{
+                    text:"知道了",
+                    callback(toast){
+                        toast.log()
+                        console.log('用户说他知道了');
+                    }
+                }
+            })
         }
     },
     mounted(){

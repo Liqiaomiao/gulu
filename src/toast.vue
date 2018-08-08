@@ -23,9 +23,7 @@
                 type:Object,
                 default:()=>({
                     text:'关闭',
-                    callback:(toast)=>{
-                        toast.close()
-                    }
+                    callback:undefined
                 })
             }
         },
@@ -41,9 +39,15 @@
                 this.$el.remove();
                 this.$destroy();
             },
+            log(){
+                console.log('测试');
+            },
             onClickClose(){
-                this.close()
-                this.closeButton.callback(this)
+                this.close();
+                if(this.closeButton && typeof  this.closeButton.callback==='function'){
+                    this.closeButton.callback(this)
+                }
+
             }
         },
         data(){
