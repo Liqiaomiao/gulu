@@ -14,9 +14,9 @@ export default {
     }
 }
 
-function createToast({Vue,msg,toastOptions}) {
+function createToast({Vue,msg,propsData}) {
     let Constructor=Vue.extend(Toast);
-    let toast = new Constructor(toastOptions);
+    let toast = new Constructor({propsData});
     toast.$slots.default=[msg];
     toast.$mount();
     document.body.appendChild(toast.$el);
