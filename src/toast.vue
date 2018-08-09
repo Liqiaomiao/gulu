@@ -67,7 +67,6 @@
                     },this.autoCloseDelay*1000)
                 }
             },
-
             close(){
                 this.$el.remove();
                 this.$destroy();

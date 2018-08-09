@@ -23,7 +23,7 @@ new Vue({
             console.log(e,xxx)
         },
         showToast(){
-            this.$toast('ok<a href="http://qq.com">qq</a>',{
+            this.$toast(`你的智商为${parseInt(Math.random()*100)}`,{
                 position:'bottom',
                 closeButton:{
                     text:"知道了",
