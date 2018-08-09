@@ -24,6 +24,7 @@ new Vue({
         },
         showToast(){
             this.$toast('ok<a href="http://qq.com">qq</a>',{
+                position:'bottom',
                 closeButton:{
                     text:"知道了",
                     callback(toast){
