@@ -25,13 +25,15 @@ new Vue({
         showToast(){
             this.$toast(`你的智商为${parseInt(Math.random()*100)}`,{
                 position:'bottom',
+                autoClose:false,
                 closeButton:{
                     text:"知道了",
                     callback(toast){
                         toast.log();
                         console.log('用户说他知道了');
                     }
-                }
+                },
+
             })
         }
     },
