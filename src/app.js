@@ -7,16 +7,30 @@ import Button from './button.vue'
 import Icon from './icon.vue'
 import ButtonGroup from './button-group.vue'
 import Input from './Input.vue'
+import Tabs from './tabs.vue'
+import TabsHead from './tabs-head.vue'
+import TabsBody from './tabs-body.vue'
+import TabsItem from './tabs-item.vue'
+import TabsPane from './tabs-pane.vue'
+
 Vue.component('g-button',Button);
 Vue.component('g-icon',Icon);
 Vue.component('g-button-group',ButtonGroup);
 Vue.component('g-input',Input);
+
+Vue.component('g-tabs',Tabs);
+Vue.component('g-tabs-head',TabsHead);
+Vue.component('g-tabs-body',TabsBody);
+Vue.component('g-tabs-item',TabsItem);
+Vue.component('g-tabs-pane',TabsPane);
+
 Vue.use(plugin);
 new Vue({
     el:"#app",
     data:{
         loading:true,
-        message:'456'
+        message:'456',
+        selectedTab:'sports'
     },
     methods:{
         inputChange(e,xxx){
