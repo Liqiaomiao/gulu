@@ -35,13 +35,16 @@
             onClick(){
                 if(this.disabled){return}
                 this.eventBus.$emit('update:selected',this.name,this)
-
+                this.$emit('click')
             }
         },
         created(){
-            this.eventBus.$on('update:selected',(name)=>{
-                this.active=name===this.name
-            })
+            if(this.eventBus){
+                this.eventBus.$on('update:selected',(name)=>{
+                    this.active=name===this.name
+                })
+            }
+
         }
     }
 </script>
