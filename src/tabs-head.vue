@@ -13,9 +13,9 @@
         name: "GuluTabsHead",
         inject:['eventBus'],
         created(){
-            this.eventBus.$on('update:selected',(item,vm)=>{
-                console.log(item);
-            })
+           this.eventBus.$on('update:selected',(item,vm)=>{
+               console.log(item, vm);
+           })
         }
     }
 </script>
