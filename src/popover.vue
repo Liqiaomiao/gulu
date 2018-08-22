@@ -3,7 +3,7 @@
         <div  ref="contentWrapper" class="content-wrapper" v-if="visible"
         :class="{[`position-${position}`]:true}"
         >
-            <slot name="content"></slot>
+            <slot name="content" :close="close"></slot>
         </div>
         <span ref="triggerWrapper">
             <slot></slot>
@@ -85,7 +85,6 @@
 
           },
           open(){
-              console.log('open',event.target);
               this.visible=true;
               this.$nextTick(()=>{
                   this.positionContent()
@@ -93,13 +92,11 @@
               })
           },
           close(){
-              console.log('close',event.target);
               this.visible=false;
               document.removeEventListener('click',this.onClickDocument)
           },
           onClick(){
               if(this.$refs.triggerWrapper.contains(event.target)){
-                  console.log(this.$refs.triggerWrapper, this.visible);
                   if(this.visible===true){
                       this.close()
                   }else{
