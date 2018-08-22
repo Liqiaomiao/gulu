@@ -1,5 +1,5 @@
 <template>
-    <div class="popover" @click="onClick" ref="popover">
+    <div class="popover" ref="popover">
         <div  ref="contentWrapper" class="content-wrapper" v-if="visible"
         :class="{[`position-${position}`]:true}"
         >
@@ -28,11 +28,27 @@
                 validator(value){
                     return ['top','left','bottom','right'].indexOf(value)>=0
                 }
+            },
+            trigger:{
+                typs:'String',
+                default:'click',
+                validator(value){
+                    return ['click','hover'].indexOf(value)>=0
+                }
             }
 
         },
+        mounted(){
+            if(this.trigger=='click'){
+                this.$refs.popover.addEventListener('click',this.onClick)
+            }else {
+                this.$refs.popover.addEventListener('mouseenter',this.open)
+                this.$refs.popover.addEventListener('mouseleave',this.close)
+            }
+        },
         methods:{
           positionContent(){
+
               let {contentWrapper, triggerWrapper} = this.$refs
               document.body.appendChild(this.$refs.contentWrapper)
               let {width, height, left, top} = triggerWrapper.getBoundingClientRect();
@@ -55,10 +71,13 @@
                   }
 
               }
-              contentWrapper.style.left = positions[this.position].left+'px'
+              contentWrapper.style.left = positions[this.position].left+'px';
               contentWrapper.style.top = positions[this.position].top+'px'
           },
           onClickDocument(e){
+              if(this.$refs.popover &&(this.$refs.popover===e.target || this.$refs.popover.contains(e.target))){
+                  return
+              }
               if(this.$refs.contentWrapper &&(this.$refs.contentWrapper===e.target || this.$refs.contentWrapper.contains(e.target))){
                   return
               }
@@ -66,6 +85,7 @@
 
           },
           open(){
+              console.log('open',event.target);
               this.visible=true;
               this.$nextTick(()=>{
                   this.positionContent()
@@ -73,12 +93,14 @@
               })
           },
           close(){
+              console.log('close',event.target);
               this.visible=false;
               document.removeEventListener('click',this.onClickDocument)
           },
           onClick(){
               if(this.$refs.triggerWrapper.contains(event.target)){
-                  if(this.visible){
+                  console.log(this.$refs.triggerWrapper, this.visible);
+                  if(this.visible===true){
                       this.close()
                   }else{
                       this.open()
