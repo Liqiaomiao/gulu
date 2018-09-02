@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="app" icon="settings">
-    <button @click="showToast">to toast</button>
+    <button @click="showToast">top</button>
     <g-input value="zhangsan"  disabled></g-input>
     <g-input value="zhangsan" readonly></g-input>
     <g-input value="zhangsan" v-model="message" @change="inputChange"></g-input>
@@ -63,6 +63,18 @@
         </g-tabs-body>
     </g-tabs>
 
+    <g-popover>
+        <template slot="content">
+            <div>popover内容</div>
+        </template>
+            <button>点我</button>
+    </g-popover>
+    <g-popover>
+        <template slot="content">
+            <div>popover内容</div>
+        </template>
+        <button>点我</button>
+    </g-popover>
 </div>
 <style>
     * {
