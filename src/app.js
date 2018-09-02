@@ -37,9 +37,10 @@ new Vue({
     data:{
         loading:true,
         message:'456',
-        selectedTab:'sports'
+        selectedTab:['2','1']
     },
     methods:{
+
         inputChange(e,xxx){
             console.log(e,xxx)
         },

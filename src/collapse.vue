@@ -15,23 +15,36 @@
                 default:false
             },
             selected:{
-                type:String
+                type:Array
             }
         },
         data(){
             return {
-                eventBus:new Vue(),
+                eventBus:new Vue()
             }
         },
         provide(){
                 return{
                     eventBus:this.eventBus
                 }
-
-
         },
         mounted(){
-            this.eventBus.$emit("update:selected",this.selected)
+            this.eventBus.$emit("update:selected",this.selected);
+            this.eventBus.$on('update:addselected',(name)=>{
+                this.selected.push(name);
+                this.eventBus.$emit("update:selected",this.selected);
+                this.$emit("update:selected",this.selected)
+            })
+            this.eventBus.$on('update:removeselected',(name)=>{
+                let index=this.selected.indexOf(name);
+                this.selected.splice(index,1);
+                this.eventBus.$emit("update:selected",this.selected);
+                this.$emit("update:selected",this.selected)
+            })
+            this.$children.forEach((vm)=>{
+                vm.single=this.single;
+            })
+
         }
     }
 </script>
