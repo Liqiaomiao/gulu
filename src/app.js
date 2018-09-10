@@ -37,7 +37,7 @@ new Vue({
     data:{
         loading:true,
         message:'456',
-        selectedTab:['2','1']
+        selectedTab:['2']
     },
     methods:{
 
