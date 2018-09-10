@@ -47,13 +47,7 @@
     }
 </script>
 <style scoped lang="scss" type="text/scss">
-$height:32px;
-$border-color:#999;
-$borer-color-hover:#666;
-$border-radius:4px;
-$font-size:14px;
-$box-shadow-color:rgba(0,0,0,.25);
-$red:#f1453d;
+@import "var.scss";
 .wrapper{
     display:inline-flex; align-items:center;
     > :not(:last-child){
@@ -72,7 +66,7 @@ $red:#f1453d;
         }
      }
     >input{
-        height: $height;
+        height: $input-height;
         border:1px solid $border-color;
         border-radius:$border-radius;
         padding:0 8px;
