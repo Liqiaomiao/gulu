@@ -17,27 +17,59 @@ import Popover from './popover'
 import Collapse from './collapse.vue'
 import CollapseItem from './collage-item.vue'
 
+import Cascader from './cascader.vue'
+
 Vue.component('g-button',Button);
-Vue.component('g-icon',Icon);
 Vue.component('g-button-group',ButtonGroup);
-Vue.component('g-input',Input);
-
-Vue.component('g-tabs',Tabs);
-Vue.component('g-tabs-head',TabsHead);
-Vue.component('g-tabs-body',TabsBody);
-Vue.component('g-tabs-item',TabsItem);
-Vue.component('g-tabs-pane',TabsPane);
-
-Vue.component('g-popover',Popover);
+Vue.component('g-cascader',Cascader);
 Vue.component('g-collapse',Collapse);
 Vue.component('g-collapse-item',CollapseItem);
+Vue.component('g-icon',Icon);
+Vue.component('g-input',Input);
+Vue.component('g-popover',Popover);
+Vue.component('g-tabs',Tabs);
+Vue.component('g-tabs-body',TabsBody);
+Vue.component('g-tabs-head',TabsHead);
+Vue.component('g-tabs-item',TabsItem);
+Vue.component('g-tabs-pane',TabsPane);
 Vue.use(plugin);
 new Vue({
     el:"#app",
     data:{
         loading:true,
         message:'456',
-        selectedTab:['2']
+        selectedTab:['2'],
+        source:[{
+            name: '浙江',
+            children: [
+                {name: '杭州',
+                    children:[
+                        {name:'上城区'},
+                        {name:'下城区'},
+                        {name:'江干区'}
+                    ]
+                },
+                {name: '嘉兴',
+                    children:[
+                        {name:'南湖区'},
+                        {name:'秀洲区'},
+                        {name:'嘉善区'}
+                    ]
+                }
+            ]
+        },{
+            name:'福建',
+            children:[
+                {name:'福州市',
+                    children:[
+                        {name:'鼓楼区'},
+                        {name:'台州区'},
+                        {name:'苍山区'}
+                    ]
+                },
+
+            ]
+        }]
     },
     methods:{
 
