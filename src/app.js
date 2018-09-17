@@ -39,6 +39,7 @@ new Vue({
         loading:true,
         message:'456',
         selectedTab:['2'],
+        height:'200px',
         source:[{
             name: '浙江',
             children: [

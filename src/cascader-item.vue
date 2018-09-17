@@ -1,5 +1,5 @@
 <template>
-    <div class="cascaderItem">
+    <div class="cascaderItem" >
         <div class="left" >
             <div class="label" v-for="(items,index) in sourceItem" @click="leftSelected=items">
                 {{items.name}}
@@ -11,10 +11,23 @@
         </div>
     </div>
 </template>
-<style>
+<style lang="scss" scoped>
+    @import "./var.scss";
+
 .cascaderItem{
-    border: 1px solid red;
-  display: flex;
+    display: flex;
+    height: 100%;
+
+    &>div{
+          min-width:160px;
+      }
+    .left{
+
+    }
+    .right{
+        border-left:1px  solid $border-color;
+    }
+
 }
 </style>
 <script>
