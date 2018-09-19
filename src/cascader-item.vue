@@ -12,48 +12,43 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    @import "./var.scss";
+@import "./var.scss";
 
-.cascaderItem{
-    display: flex;
-    height: 100%;
+.cascaderItem {
+  display: flex;
+  height: 100%;
 
-    &>div{
-          min-width:160px;
-      }
-    .left{
-
-    }
-    .right{
-        border-left:1px  solid $border-color;
-    }
-
+  & > div {
+    min-width: 160px;
+  }
+  .left {
+  }
+  .right {
+    border-left: 1px solid $border-color-light;
+  }
 }
 </style>
 <script>
-    export default{
-        name:'cascaderItem',
-        props:{
-            sourceItem:{
-                type:Array
-            }
-        },
-        data(){
-            return {
-                leftSelected:null,
-            }
-        },
-        computed:{
-            rightItems(){
-                if(this.leftSelected){
-                    return this.leftSelected.children
-                }else{
-                    return []
-                }
-
-            }
-        }
+export default {
+  name: "cascaderItem",
+  props: {
+    sourceItem: {
+      type: Array
     }
+  },
+  data() {
+    return {
+      leftSelected: null
+    };
+  },
+  computed: {
+    rightItems() {
+      if (this.leftSelected) {
+        return this.leftSelected.children;
+      } else {
+        return [];
+      }
+    }
+  }
+};
 </script>
-
-

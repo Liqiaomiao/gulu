@@ -11,90 +11,89 @@
 </template>
 
 <script>
-    import Vue from  'vue'
-    import  Icon from './icon.vue'
-    Vue.component('g-icon',Icon);
-    export default{
-        name:'',
-        props: {
-            icon: {},
-            loading: {
-                type: Boolean,
-                default: false
-            },
-            iconPosition: {
-                type: String,
-                default: 'left',
-                validator(value){
-                    return value == 'left' || value == 'right';
-                }
-            }
-        }
+import Vue from "vue";
+import Icon from "./icon.vue";
+Vue.component("g-icon", Icon);
+export default {
+  name: "",
+  props: {
+    icon: {},
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    iconPosition: {
+      type: String,
+      default: "left",
+      validator(value) {
+        return value == "left" || value == "right";
+      }
     }
+  }
+};
 </script>
 <style lang="scss" scoped>
-    @import "var.scss";
+@import "var.scss";
 
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
-    .loading {
-        width: 1em;
-        height: 1em;
-        animation: spin 2s infinite linear;
-    }
+.loading {
+  width: 1em;
+  height: 1em;
+  animation: spin 2s infinite linear;
+}
 
-    .g-button {
-        vertical-align: middle;
-        height: $button-height;
-        font: inherit;
-        border-radius: $border-radius;
-        border: 1px solid $border-color;
-        background: $button-bg;
-        padding: 0 1em;
-        display: inline-flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
-        padding: 0 1em;
+.g-button {
+  vertical-align: middle;
+  height: $button-height;
+  font: inherit;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  background: $button-bg;
+  padding: 0 1em;
+  display: inline-flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  padding: 0 1em;
 
-    &:hover {
-        border-color: $border-color-hover;
-    }
+  &:hover {
+    border-color: $border-color-hover;
+  }
 
-    &:active {
-        background: $button-active-bg;
-    }
+  &:active {
+    background: $button-active-bg;
+  }
 
-    &:focus {
-        outline: none;
-    }
+  &:focus {
+    outline: none;
+  }
 
-    >.icon {
-        order: 1;
-        margin-right: .1em;
-    }
+  > .icon {
+    order: 1;
+    margin-right: 0.1em;
+  }
 
-    >.content {
-        order: 2
-    }
-    }
-    .g-button.icon-right {
-    >.icon {
-         order: 2;
-         margin-right: 0;
-         margin-left: .1em
-     }
+  > .content {
+    order: 2;
+  }
+}
+.g-button.icon-right {
+  > .icon {
+    order: 2;
+    margin-right: 0;
+    margin-left: 0.1em;
+  }
 
-    >.content {
-         order: 1
-     }
-
-    }
+  > .content {
+    order: 1;
+  }
+}
 </style>

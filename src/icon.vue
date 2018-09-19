@@ -1,8 +1,8 @@
 <style lang="scss" scoped>
-    .icon {
-        height: 1em;
-        width: 1em;
-    }
+.icon {
+  height: 1em;
+  width: 1em;
+}
 </style>
 <template>
         <svg v-if="name" class="icon">
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-    import './svg'
-    export default{
-        props:['name']
-    }
+import "./svg";
+export default {
+  props: ["name"]
+};
 </script>
