@@ -7,7 +7,7 @@
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
             <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected">
-            </cascader-item>
+        </cascader-item>
         </div>
     </div>
 </template>
@@ -62,6 +62,7 @@ export default {
         onClickLabel(item){
             let copy=JSON.parse(JSON.stringify(this.selected));
             copy[this.level]=item;
+            copy.splice(this.level+1);
             this.$emit('update:selected',copy);
         },
         onChangeSelected(copy){
