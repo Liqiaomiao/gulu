@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <g-button>hello</g-button>
-        {{selected}}
+    <div style="padding: 20px;">
         <g-cascader :source="source" gheight="100px"  :selected="selected" @update:selected="onChangeSelected"></g-cascader>
     </div>
 </template>
@@ -22,9 +20,8 @@
         --border-color:#d9d9d9;
         --border-color-hover: #666;
     }
-
     body {
-        font-size: var(--font-size);
+        font-size: 14px;
     }
 
     #app {
@@ -34,6 +31,7 @@
 <script>
 import gButton from "./Button";
 import gCascader from "./cascader.vue";
+
 export default {
     data() {
         return {

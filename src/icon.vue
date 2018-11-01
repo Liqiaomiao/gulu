@@ -5,7 +5,7 @@
 }
 </style>
 <template>
-        <svg v-if="name" class="icon">
+        <svg v-if="name" :class="['icon',classname] ">
             <use :xlink:href="`#i-${name}`"></use>
         </svg>
 
@@ -14,6 +14,13 @@
 <script>
 import "./svg";
 export default {
-  props: ["name"]
+  props: {
+      name:{
+          type:String
+      },
+      classname:{
+          type:String
+      }
+  }
 };
 </script>

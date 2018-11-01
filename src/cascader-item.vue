@@ -2,7 +2,8 @@
     <div class="cascaderItem" >
         <div class="left" >
             <div class="label" v-for="(items,index) in sourceItem" @click="onClickLabel(items)">
-                {{items.name}} {{level}}
+                {{items.name}}
+                <Icon classname="icon-right" name="right" v-if="items.children"></Icon>
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
@@ -17,11 +18,16 @@
 .cascaderItem {
   display: flex;
   height: 100%;
-
+    .icon-right{
+        width: 10px;
+        height: 10px;
+        fill: gray;
+    }
   & > div {
-    min-width: 160px;
+    min-width: 60px;
   }
   .left {
+      padding:10px;
   }
   .right {
     border-left: 1px solid $border-color-light;
@@ -29,8 +35,12 @@
 }
 </style>
 <script>
+    import Icon from "./icon.vue";
 export default {
   name: "cascaderItem",
+    components:{
+        Icon
+    },
   props: {
     sourceItem: {
       type: Array
