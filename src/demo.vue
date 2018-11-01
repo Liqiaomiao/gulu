@@ -1,7 +1,8 @@
 <template>
     <div>
         <g-button>hello</g-button>
-        <g-cascader :source="source" gheight="100px"></g-cascader>
+        {{selected}}
+        <g-cascader :source="source" gheight="100px"  :selected="selected" @update:selected="onChangeSelected"></g-cascader>
     </div>
 </template>
 <style lang="scss">
@@ -34,49 +35,55 @@
 import gButton from "./Button";
 import gCascader from "./cascader.vue";
 export default {
-  data() {
-    return {
-      source: [
-        {
-          name: "浙江",
-          children: [
-            {
-              name: "杭州",
-              children: [
-                { name: "上城区" },
-                { name: "下城区" },
-                { name: "江干区" }
-              ]
-            },
-            {
-              name: "嘉兴",
-              children: [
-                { name: "南湖区" },
-                { name: "秀洲区" },
-                { name: "嘉善区" }
-              ]
-            }
-          ]
-        },
-        {
-          name: "福建",
-          children: [
-            {
-              name: "福州市",
-              children: [
-                { name: "鼓楼区" },
-                { name: "台州区" },
-                { name: "苍山区" }
-              ]
-            }
-          ]
+    data() {
+        return {
+            selected: [],
+            source: [
+                {
+                    name: "浙江",
+                    children: [
+                        {
+                            name: "杭州",
+                            children: [
+                                {name: "上城区"},
+                                {name: "下城区"},
+                                {name: "江干区"}
+                            ]
+                        },
+                        {
+                            name: "嘉兴",
+                            children: [
+                                {name: "南湖区"},
+                                {name: "秀洲区"},
+                                {name: "嘉善区"}
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "福建",
+                    children: [
+                        {
+                            name: "福州市",
+                            children: [
+                                {name: "鼓楼区"},
+                                {name: "台州区"},
+                                {name: "苍山区"}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+    },
+    components: {
+        gButton,
+        gCascader
+    },
+    methods:{
+        onChangeSelected(copy){
+            this.selected=copy
         }
-      ]
-    };
-  },
-  components: {
-    gButton,
-    gCascader
-  }
+    }
 };
 </script>

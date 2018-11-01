@@ -4,7 +4,7 @@
         </div>
         <div class="popover-wraper" v-if="popoverVisible" :style="{height:gheight}">
 
-            <cascader-item  :sourceItem="source"></cascader-item>
+            <cascader-item  :sourceItem="source" :selected="selected" @update:selected="onChangeSelected"></cascader-item>
 
         </div>
     </div>
@@ -13,34 +13,45 @@
 <script>
 import cascaderItem from "./cascader-item.vue";
 export default {
-  name: "GuluCascader",
-  components: {
-    cascaderItem
-  },
-  props: {
-    source: {
-      type: Array
+    name: "GuluCascader",
+    components: {
+        cascaderItem
     },
-    gheight: {
-      type: String
+    props: {
+        source: {
+            type: Array
+        },
+        gheight: {
+            type: String
+        },
+        selected: {
+            type: Array,
+            default: () => []
+        },
+    },
+    data() {
+        return {
+            popoverVisible: true,
+            level1Selected: null,
+            level2Selected: null
+        };
+    },
+    computed: {
+        level2Items() {
+            if (this.level1Selected) {
+                return this.level1Selected.children;
+            } else {
+                return [];
+            }
+        }
+    },
+    methods: {
+        onChangeSelected(copy){
+            this.$emit('update:selected',copy)
+        }
     }
-  },
-  data() {
-    return {
-      popoverVisible: true,
-      level1Selected: null,
-      level2Selected: null
-    };
-  },
-  computed: {
-    level2Items() {
-      if (this.level1Selected) {
-        return this.level1Selected.children;
-      } else {
-        return [];
-      }
-    }
-  }
+
+
 };
 </script>
 <style lang="scss" scoped>

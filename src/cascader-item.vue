@@ -1,12 +1,12 @@
 <template>
     <div class="cascaderItem" >
         <div class="left" >
-            <div class="label" v-for="(items,index) in sourceItem" @click="leftSelected=items">
-                {{items.name}}
+            <div class="label" v-for="(items,index) in sourceItem" @click="onClickLabel(items)">
+                {{items.name}} {{level}}
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
-            <cascader-item :sourceItem="rightItems">
+            <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected">
             </cascader-item>
         </div>
     </div>
@@ -34,21 +34,40 @@ export default {
   props: {
     sourceItem: {
       type: Array
+    },
+      selected:{
+        type:Array,
+          default:()=>[]
+      },
+    level:{
+        type:Number,
+        default:()=>0
     }
   },
   data() {
     return {
-      leftSelected: null
     };
   },
   computed: {
     rightItems() {
-      if (this.leftSelected) {
-        return this.leftSelected.children;
+        let currentSelected = this.selected[this.level];
+        if (currentSelected&&currentSelected.children) {
+        return currentSelected.children
       } else {
         return [];
       }
     }
-  }
+  },
+    methods:{
+        onClickLabel(item){
+            let copy=JSON.parse(JSON.stringify(this.selected));
+            copy[this.level]=item;
+            this.$emit('update:selected',copy);
+        },
+        onChangeSelected(copy){
+            this.$emit('update:selected',copy)
+        }
+    }
 };
+
 </script>
