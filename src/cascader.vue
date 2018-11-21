@@ -4,7 +4,7 @@
             {{result||"&nbsp;"}}
         </div>
         <div class="popover-wraper" v-if="popoverVisible" :style="{height:gheight}">
-            <cascader-item  :sourceItem="source" :selected="selected" @update:selected="onChangeSelected"></cascader-item>
+            <cascader-item  :sourceItem="source" :selected="selected" @update:selected="onChangeSelected" ></cascader-item>
         </div>
     </div>
 </template>
@@ -28,10 +28,13 @@ export default {
             type: Array,
             default: () => []
         },
+        loadData:{
+            type:Function
+        }
     },
     data() {
         return {
-            popoverVisible: true,
+            popoverVisible: false,
             level1Selected: null,
             level2Selected: null
         };
@@ -52,7 +55,15 @@ export default {
     },
     methods: {
         onChangeSelected(copy){
-            this.$emit('update:selected',copy)
+            this.$emit('update:selected',copy);
+            let lastItem = copy[copy.length-1];
+            let updateSourcce=(result)=>{
+
+                //掉回调的时候传一个函数，这个函数理论上应该会被调用
+
+            }
+            this.loadData(lastItem,updateSourcce)
+
         }
     }
 

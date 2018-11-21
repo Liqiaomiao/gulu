@@ -1,6 +1,10 @@
 <template>
     <div style="padding: 20px;">
-        <g-cascader :source="source" gheight="100px"  :selected="selected" @update:selected="onChangeSelected"></g-cascader>
+        <g-cascader :source="source" gheight="100px"
+                    :selected.sync="selected"
+                    @update:selected="xxx"
+                    :load-data="loadData"
+        ></g-cascader>
     </div>
 </template>
 <style lang="scss">
@@ -31,47 +35,29 @@
 <script>
 import gButton from "./Button";
 import gCascader from "./cascader.vue";
+import db from './db'
+/*function ajax1(parentId=0,success,fail) {
+    let id=setTimeout(()=>{
+        let result =  db.filter(item=>item.parent_id===parentId);
+        success(result)
+    },3000)
+   return id
+}*/
+function ajax(parentId=0,success,fail) {
+    return new Promise((success,fail)=>{
+        setTimeout(()=>{
+            let result =  db.filter(item=>item.parent_id===parentId);
+            success(result)
+        },2000)
+
+    })
+}
 
 export default {
     data() {
         return {
             selected: [],
-            source: [
-                {
-                    name: "浙江",
-                    children: [
-                        {
-                            name: "杭州",
-                            children: [
-                                {name: "上城区"},
-                                {name: "下城区"},
-                                {name: "江干区"}
-                            ]
-                        },
-                        {
-                            name: "嘉兴",
-                            children: [
-                                {name: "南湖区"},
-                                {name: "秀洲区"},
-                                {name: "嘉善区"}
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "福建",
-                    children: [
-                        {
-                            name: "福州市",
-                            children: [
-                                {name: "鼓楼区"},
-                                {name: "台州区"},
-                                {name: "苍山区"}
-                            ]
-                        }
-                    ]
-                }
-            ]
+            source:[]
         };
     },
     components: {
@@ -79,9 +65,27 @@ export default {
         gCascader
     },
     methods:{
+
         onChangeSelected(copy){
             this.selected=copy
+        },
+        loadData(node,fn){
+            let id = node.id;
+            ajax(id).then(result=>{
+                fn(result)
+            })
+        },
+        xxx(copy){
+            ajax(this.selected[0].id).then(data => {
+                let lastLevelSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
+                this.$set(lastLevelSelected, 'children', data)
+            })
         }
+    },
+    created(){
+        ajax(0).then((data)=>{
+            this.source=data;
+        })
     }
 };
 </script>

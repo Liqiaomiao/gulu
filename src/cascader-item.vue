@@ -28,6 +28,7 @@
   }
   .left {
       padding:10px;
+      overflow: auto;
   }
   .right {
     border-left: 1px solid $border-color-light;
