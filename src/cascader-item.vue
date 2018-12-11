@@ -3,7 +3,7 @@
         <div class="left" >
             <div class="label" v-for="(items,index) in sourceItem" @click="onClickLabel(items)">
                 {{items.name}}
-                <Icon classname="icon-right" name="right" v-if="items.children"></Icon>
+                <Icon classname="icon-right" name="right" v-if="items.children&&items.children.length>0"></Icon>
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
@@ -61,19 +61,24 @@ export default {
   },
   computed: {
     rightItems() {
-        let currentSelected = this.selected[this.level];
-        if (currentSelected&&currentSelected.children) {
-        return currentSelected.children
-      } else {
-        return [];
-      }
+        if(this.selected[this.level]){
+            let right= this.sourceItem.filter(item=>{
+                return  item.name==this.selected[this.level].name
+            })[0];
+            if(right&&right.children&&right.children.length>0){
+              return right.children
+          }
+        }
+
     }
   },
+    updated(){
+    },
     methods:{
         onClickLabel(item){
             let copy=JSON.parse(JSON.stringify(this.selected));
             copy[this.level]=item;
-            copy.splice(this.level+1);
+            copy.splice(this.level+1);//移除后面的项，重新选择城市能够实时更新子集
             this.$emit('update:selected',copy);
         },
         onChangeSelected(copy){

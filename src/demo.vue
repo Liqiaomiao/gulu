@@ -1,8 +1,7 @@
 <template>
     <div style="padding: 20px;">
-        <g-cascader :source="source" gheight="100px"
+        <g-cascader :source.sync="source" gheight="100px"
                     :selected.sync="selected"
-                    @update:selected="xxx"
                     :load-data="loadData"
         ></g-cascader>
     </div>
@@ -48,7 +47,7 @@ function ajax(parentId=0,success,fail) {
         setTimeout(()=>{
             let result =  db.filter(item=>item.parent_id===parentId);
             success(result)
-        },2000)
+        },100)
 
     })
 }
@@ -57,7 +56,8 @@ export default {
     data() {
         return {
             selected: [],
-            source:[]
+            source:[],
+            level:0
         };
     },
     components: {
@@ -76,7 +76,7 @@ export default {
             })
         },
         xxx(copy){
-            ajax(this.selected[0].id).then(data => {
+            ajax(this.selected[this.level].id).then(data => {
                 let lastLevelSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
                 this.$set(lastLevelSelected, 'children', data)
             })
