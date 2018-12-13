@@ -2,19 +2,20 @@
     <div class="cascaderItem" >
         <div class="left" >
             <div class="label" v-for="(items,index) in sourceItem" @click="onClickLabel(items)">
-                {{items.name}}
-                <Icon classname="icon-right" name="right" v-if="items.children&&items.children.length>0"></Icon>
+                <span class="name">
+                    {{items.name}}
+                </span>
+                <Icon classname="icon-right" name="right" v-if="arrowVisible(items)"></Icon>
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
-            <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected">
+            <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected"   :load-data="loadData">
         </cascader-item>
         </div>
     </div>
 </template>
 <style lang="scss" scoped>
 @import "./var.scss";
-
 .cascaderItem {
   display: flex;
   height: 100%;
@@ -27,8 +28,26 @@
     min-width: 60px;
   }
   .left {
-      padding:10px;
       overflow: auto;
+      padding:.3em 0;
+      height:100%;
+      .label{
+          padding: .5rem 1em;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor:pointer;
+        &:hover{
+            background: $gray;
+         }
+            .name{
+                margin-right: 1em;
+            }
+          .icon{
+              margin-left: auto;
+              transform: scale(.8);
+          }
+      }
   }
   .right {
     border-left: 1px solid $border-color-light;
@@ -43,6 +62,7 @@ export default {
         Icon
     },
   props: {
+
     sourceItem: {
       type: Array
     },
@@ -53,7 +73,10 @@ export default {
     level:{
         type:Number,
         default:()=>0
-    }
+    },
+      loadData:{
+        type:Function
+      }
   },
   data() {
     return {
@@ -83,6 +106,10 @@ export default {
         },
         onChangeSelected(copy){
             this.$emit('update:selected',copy)
+        },
+        arrowVisible(items){
+            Boolean(this.loadData)
+            return this.loadData ?  !items.isLeaf : items.children
         }
     }
 };

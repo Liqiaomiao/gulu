@@ -1,11 +1,11 @@
 <template>
-    <div class="cascader">
-        <div class="trigger" @click="popoverVisible=!popoverVisible">
+    <div class="cascader" ref="cascader">
+        <div class="trigger" @click="toggle">
             {{result||"&nbsp;"}}
         </div>
         <div class="popover-wraper" v-if="popoverVisible" :style="{height:gheight}">
-            <cascader-item :sourceItem="source" :selected="selected"
-                           @update:selected="onChangeSelected"></cascader-item>
+            <cascader-item :sourceItem="source" :selected="selected"   :load-data="loadData"
+                           @update:selected="onChangeSelected" ></cascader-item>
         </div>
     </div>
 </template>
@@ -115,9 +115,35 @@
                     this.$emit('update:source', deepcopy)
 
 
+                };
+                console.log(lastItem.isLeaf);
+                if(!lastItem.ifLeaf){
+                  this.loadData &&  this.loadData(lastItem, updateSourcce)
                 }
-                this.loadData(lastItem, updateSourcce)
-
+            },
+            onClickDocument(e){
+                let cascader=this.$refs.cascader;
+                if(e.target==cascader || cascader.contains(e.target)){
+                    return
+                }
+                this.close()
+            },
+            open(){
+                this.popoverVisible=true;
+                this.$nextTick(()=>{
+                    document.addEventListener('click',this.onClickDocument)
+                })
+            },
+            close(){
+                this.popoverVisible=false;
+                document.removeEventListener('click',this.onClickDocument)
+            },
+            toggle(){
+                if(this.popoverVisible){
+                    this.close()
+                }else {
+                    this.open()
+                }
             }
         }
 
@@ -127,6 +153,7 @@
 <style lang="scss" scoped>
 @import "var.scss";
 .cascader {
+    display:inline-block;
   .trigger {
     border: 1px solid $border-color;
     height: 30px;
