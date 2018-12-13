@@ -1,5 +1,5 @@
 <template>
-    <div class="cascader" ref="cascader">
+    <div class="cascader" ref="cascader" v-click-outside="close">
         <div class="trigger" @click="toggle">
             {{result||"&nbsp;"}}
         </div>
@@ -12,11 +12,15 @@
 
 <script>
     import cascaderItem from "./cascader-item.vue";
-
+    import clickOutside from './click-outside'
+    import removeListener from './click-outside'
     export default {
         name: "GuluCascader",
         components: {
             cascaderItem
+        },
+        directives:{
+            clickOutside
         },
         props: {
             source: {
@@ -53,6 +57,9 @@
                     return item.name
                 }).join("/")
             }
+        },
+        created(){
+            removeListener();
         },
         methods: {
             onChangeSelected(copy){
@@ -121,22 +128,22 @@
                   this.loadData &&  this.loadData(lastItem, updateSourcce)
                 }
             },
-            onClickDocument(e){
-                let cascader=this.$refs.cascader;
-                if(e.target==cascader || cascader.contains(e.target)){
+            onClickDocument({target}){
+                let {cascader}=this.$refs;
+                if(target==cascader || cascader.contains(target)){
                     return
                 }
                 this.close()
             },
             open(){
                 this.popoverVisible=true;
-                this.$nextTick(()=>{
-                    document.addEventListener('click',this.onClickDocument)
-                })
+//                this.$nextTick(()=>{
+//                    document.addEventListener('click',this.onClickDocument)
+//                })
             },
             close(){
                 this.popoverVisible=false;
-                document.removeEventListener('click',this.onClickDocument)
+//                document.removeEventListener('click',this.onClickDocument)
             },
             toggle(){
                 if(this.popoverVisible){
