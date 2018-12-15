@@ -5,7 +5,7 @@
                 <span class="name">
                     {{items.name}}
                 </span>
-                <template  v-if="loading.name==items.name" >
+                <template  v-if="loading.name==items.name&&!items.isLeaf && !rightItems" >
                     <Icon classname="icon-loading" name="loading"></Icon>
                 </template>
                 <template v-else>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
-            <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected"   :load-data="loadData">
+            <cascader-item :sourceItem="rightItems" :level="level+1" :selected="selected" @update:selected="onChangeSelected"   :load-data="loadData" :loading="loading">
         </cascader-item>
         </div>
     </div>
@@ -65,65 +65,64 @@
 </style>
 <script>
     import Icon from "./icon.vue";
-export default {
-  name: "cascaderItem",
-    components:{
-        Icon
-    },
-  props: {
-    loading:{
-        type:Object,
-        default:()=>({})
-    },
-    sourceItem: {
-      type: Array
-    },
-      selected:{
-        type:Array,
-          default:()=>[]
-      },
-    level:{
-        type:Number,
-        default:()=>0
-    },
-      loadData:{
-        type:Function
-      }
-  },
-  data() {
-    return {
-    };
-  },
-  computed: {
-    rightItems() {
-        if(this.selected[this.level]){
-            let right= this.sourceItem.filter(item=>{
-                return  item.name==this.selected[this.level].name
-            })[0];
-            if(right&&right.children&&right.children.length>0){
-              return right.children
-          }
-        }
+    export default {
+        name: "cascaderItem",
+        components: {
+            Icon
+        },
+        props: {
+            loading: {
+                type: Object,
+                default: () => ({})
+            },
+            sourceItem: {
+                type: Array
+            },
+            selected: {
+                type: Array,
+                default: () => []
+            },
+            level: {
+                type: Number,
+                default: () => 0
+            },
+            loadData: {
+                type: Function
+            }
+        },
+        data() {
+            return {};
+        },
+        computed: {
+            rightItems() {
+                if (this.selected[this.level]) {
+                    let right = this.sourceItem.filter(item => {
+                        return item.name == this.selected[this.level].name
+                    })[0];
+                    if (right && right.children && right.children.length > 0) {
+                        return right.children
+                    }
+                }
 
-    }
-  },
-    updated(){
-    },
-    methods:{
-        onClickLabel(item){
-            let copy=JSON.parse(JSON.stringify(this.selected));
-            copy[this.level]=item;
-            copy.splice(this.level+1);//移除后面的项，重新选择城市能够实时更新子集
-            this.$emit('update:selected',copy);
+            }
         },
-        onChangeSelected(copy){
-            this.$emit('update:selected',copy)
+        updated(){
         },
-        arrowVisible(items){
-            Boolean(this.loadData)
-            return this.loadData ?  !items.isLeaf : items.children
+        methods: {
+            onClickLabel(item){
+                let copy = JSON.parse(JSON.stringify(this.selected));
+                copy[this.level] = item;
+                copy.splice(this.level + 1);//移除后面的项，重新选择城市能够实时更新子集
+                this.$emit('update:selected', copy);
+            },
+            onChangeSelected(copy){
+                this.$emit('update:selected', copy)
+            },
+            arrowVisible(items){
+                Boolean(this.loadData)
+                return this.loadData ? !items.isLeaf : items.children
+            }
         }
-    }
-};
+    };
 
 </script>

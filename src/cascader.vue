@@ -88,9 +88,7 @@
                     if (found) {
                         return found
                     } else {
-
                         found = simplest(haschildren, id);
-                        console.log('found', found);
                         if (found) {
                             return found
                         } else {
@@ -116,7 +114,6 @@
                     let deepcopy = JSON.parse(JSON.stringify(this.source));
                     let toUpdate = complex(deepcopy, lastItem.id);
                     if (toUpdate) {
-
                         toUpdate.children = result;
                     }
                     this.loading={};

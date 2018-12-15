@@ -9,12 +9,6 @@
                         :load-data="loadData"
             ></g-cascader>
         </div>
-        <div>
-            <g-cascader :source.sync="source" gheight="160px;"
-                        :selected.sync="selected"
-                        :load-data="loadData"
-            ></g-cascader>
-        </div>
     </div>
 </template>
 <style lang="scss">
@@ -90,12 +84,6 @@ export default {
             let id = node.id;
             ajax(id).then(result=>{
                 fn(result)
-            })
-        },
-        xxx(copy){
-            ajax(this.selected[this.level].id).then(data => {
-                let lastLevelSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
-                this.$set(lastLevelSelected, 'children', data)
             })
         }
     },
