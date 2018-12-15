@@ -5,7 +5,13 @@
                 <span class="name">
                     {{items.name}}
                 </span>
-                <Icon classname="icon-right" name="right" v-if="arrowVisible(items)"></Icon>
+                <template  v-if="loading.name==items.name" >
+                    <Icon classname="icon-loading" name="loading"></Icon>
+                </template>
+                <template v-else>
+                    <Icon  classname="icon-right" name="right" v-if="arrowVisible(items)"></Icon>
+                </template>
+
             </div>
         </div>
         <div class="right" v-if="rightItems&&rightItems.length>0"  >
@@ -47,6 +53,9 @@
               margin-left: auto;
               transform: scale(.8);
           }
+          .icon-loading{
+              animation: spin 2s infinite linear;
+          }
       }
   }
   .right {
@@ -62,7 +71,10 @@ export default {
         Icon
     },
   props: {
-
+    loading:{
+        type:Object,
+        default:()=>({})
+    },
     sourceItem: {
       type: Array
     },

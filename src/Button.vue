@@ -35,14 +35,7 @@ export default {
 <style lang="scss" scoped>
 @import "var.scss";
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
 
 .loading {
   width: 1em;

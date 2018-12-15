@@ -5,7 +5,7 @@
         </div>
         <div class="popover-wraper" v-if="popoverVisible" :style="{height:gheight}">
             <cascader-item :sourceItem="source" :selected="selected"   :load-data="loadData"
-                           @update:selected="onChangeSelected" ></cascader-item>
+                           @update:selected="onChangeSelected" :loading="loading"></cascader-item>
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
     import cascaderItem from "./cascader-item.vue";
     import clickOutside from './click-outside'
-    import removeListener from './click-outside'
+    import {removeListener} from './click-outside'
     export default {
         name: "GuluCascader",
         components: {
@@ -35,13 +35,15 @@
             },
             loadData: {
                 type: Function
-            }
+            },
+
         },
         data() {
             return {
                 popoverVisible: false,
                 level1Selected: null,
-                level2Selected: null
+                level2Selected: null,
+                loading:{},
             };
         },
         computed: {
@@ -58,14 +60,13 @@
                 }).join("/")
             }
         },
-        created(){
-            removeListener();
+        destoryed(){
+             removeListener();
         },
         methods: {
             onChangeSelected(copy){
                 this.$emit('update:selected', copy);
                 let lastItem = copy[copy.length - 1];//被选中的项
-                console.log('lastItem', lastItem);
                 let simplest = (children, id) => {
                     return children.filter(item => {
                         return item.id === id
@@ -118,14 +119,16 @@
 
                         toUpdate.children = result;
                     }
-
+                    this.loading={};
                     this.$emit('update:source', deepcopy)
-
-
                 };
-                console.log(lastItem.isLeaf);
                 if(!lastItem.ifLeaf){
-                  this.loadData &&  this.loadData(lastItem, updateSourcce)
+                    if(this.loadData){
+                        this.loading=lastItem;
+                        this.loadData(lastItem, updateSourcce)
+
+                    }
+
                 }
             },
             onClickDocument({target}){
@@ -174,6 +177,7 @@
     position: absolute;
     height: 150px;
     display: flex;
+    background: #fff;
     @extend .box-shadow;
       margin-top: 10px;
   }

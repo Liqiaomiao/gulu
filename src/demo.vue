@@ -3,10 +3,18 @@
   <!--      <g-cascader :source.sync="source" gheight="160px;"
                     :selected.sync="selected"
         ></g-cascader>-->
-        <g-cascader :source.sync="source" gheight="160px;"
-                    :selected.sync="selected"
-                    :load-data="loadData"
-        ></g-cascader>
+        <div>
+            <g-cascader :source.sync="source" gheight="160px;"
+                        :selected.sync="selected"
+                        :load-data="loadData"
+            ></g-cascader>
+        </div>
+        <div>
+            <g-cascader :source.sync="source" gheight="160px;"
+                        :selected.sync="selected"
+                        :load-data="loadData"
+            ></g-cascader>
+        </div>
     </div>
 </template>
 <style lang="scss">
@@ -56,7 +64,7 @@ function ajax(parentId=0,success,fail) {
                 node.isLeaf = !flag;
             });
             success(result)
-        },100)
+        },1000)
 
     })
 }

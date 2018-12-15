@@ -3,7 +3,6 @@
  */
 let onclickDocument =  ({target}) =>{
     callbacks.forEach(({el,value})=>{
-        console.log(target, el);
         if(target==el || el.contains(target)){
            return
        }else{
@@ -19,6 +18,6 @@ export default {
     }
 }
 let removeListener =  ()=> {
-    document.removeListener('click',onclickDocument)
+    document.removeEventListener('click',onclickDocument)
 }
 export {removeListener}
