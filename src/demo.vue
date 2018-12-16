@@ -14,7 +14,7 @@
         <div style="padding-top:200px;">
             <g-popover >
                 <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+                <template slot="content" :slot-scope="{close}"><g-button @click="close">关闭</g-button></template>
             </g-popover>
             <g-popover :position="'bottom'">
                 <g-button>click</g-button>
