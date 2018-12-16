@@ -94,6 +94,7 @@ export default {
                 }
             }
         }
+
     },
     mounted(){
         if (this.trigger === 'click') {
@@ -142,11 +143,13 @@ export default {
     margin-top: -10px;
     &::before{
          border-top:10px solid $border-color;
+         border-bottom: 0;
          top: 100%;
          left: 10px;
      }
     &::after{
          border-top:10px solid #fff ;
+         border-bottom: 0;
          top: calc(100% - 2px);
          left: 10px;
      }
@@ -155,11 +158,13 @@ export default {
     margin-top:10px;
     &::before{
          border-bottom:10px solid $border-color;
+         border-top:0;
          bottom: 100%;
          left: 10px;
      }
     &::after{
          border-bottom:10px solid #fff ;
+         border-top:0;
          bottom: calc(100% - 2px);
          left: 10px;
      }
@@ -169,12 +174,14 @@ export default {
     margin-left:10px;
     &::before{
          border-right:10px solid $border-color;
+         border-left:0;
          top: 50%;
          margin-top: -10px;
          right:100%;
      }
     &::after{
          border-right:10px solid #fff ;
+         border-left:0;
          top: 50%;
          margin-top: -10px;
          right:calc(100% - 2px);
@@ -185,12 +192,14 @@ export default {
     margin-left:-10px;
     &::before{
          border-left:10px solid $border-color;
+         border-right:0;
          top: 50%;
          margin-top: -10px;
          left:100%;
      }
     &::after{
          border-left:10px solid #fff ;
+         border-right:0;
          top: 50%;
          margin-top: -10px;
          left:calc(100% - 2px);
