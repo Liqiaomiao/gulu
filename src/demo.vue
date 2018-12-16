@@ -1,5 +1,6 @@
 <template>
     <div style="padding: 20px;">
+
   <!--      <g-cascader :source.sync="source" gheight="160px;"
                     :selected.sync="selected"
         ></g-cascader>-->
@@ -8,6 +9,13 @@
                         :selected.sync="selected"
                         :load-data="loadData"
             ></g-cascader>
+
+        </div>
+        <div style="padding-top:200px;">
+            <g-popover>
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
         </div>
     </div>
 </template>
@@ -40,6 +48,7 @@
 import gButton from "./Button";
 import gCascader from "./cascader.vue";
 import db from './db'
+import gPopover from './popover.vue'
 /*function ajax1(parentId=0,success,fail) {
     let id=setTimeout(()=>{
         let result =  db.filter(item=>item.parent_id===parentId);
@@ -73,10 +82,10 @@ export default {
     },
     components: {
         gButton,
-        gCascader
+        gCascader,
+        gPopover
     },
     methods:{
-
         onChangeSelected(copy){
             this.selected=copy
         },

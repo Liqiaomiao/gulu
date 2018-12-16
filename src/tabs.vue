@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     checkChildren() {
-      console.log(this.$children.length);
       if (this.$children.length === 0) {
         console &&
           console.warn &&
