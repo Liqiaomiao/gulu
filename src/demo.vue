@@ -12,7 +12,19 @@
 
         </div>
         <div style="padding-top:200px;">
-            <g-popover>
+            <g-popover >
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'bottom'">
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'left'">
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'right'">
                 <g-button>click</g-button>
                 <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
             </g-popover>
