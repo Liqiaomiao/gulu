@@ -29,6 +29,24 @@
                 <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
             </g-popover>
         </div>
+        <div style="padding-top:200px;">
+            <g-popover trigger="hover">
+                <g-button >click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'bottom'" trigger="hover">
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'left'" trigger="hover">
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+            <g-popover :position="'right'" trigger="hover">
+                <g-button>click</g-button>
+                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+            </g-popover>
+        </div>
     </div>
 </template>
 <style lang="scss">
