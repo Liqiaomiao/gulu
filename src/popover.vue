@@ -34,23 +34,27 @@ export default {
           document.body.appendChild(contentWrapper);
           let {width, height, left, top} = triggerWrapper.getBoundingClientRect();
           let {height:heightc} = contentWrapper.getBoundingClientRect();
-          const position = this.position;
-          if (position === 'top') {
-              contentWrapper.style.left = `${left + window.scrollX}px`;
-              contentWrapper.style.top = `${top + window.scrollY}px`;
-          } else if (position === 'bottom') {
-
-              contentWrapper.style.left = `${left + window.scrollX}px`;
-              contentWrapper.style.top = `${top + height + window.scrollY}px`;
-
-          } else if (position === 'left') {
-              contentWrapper.style.left = `${left + width + window.scrollX}px`;
-              contentWrapper.style.top = `${top - Math.abs(heightc - height) / 2 + window.scrollY}px`;
-          } else {
-              contentWrapper.style.left = `${left + window.scrollX}px`;
-              contentWrapper.style.top = `${top - Math.abs(heightc - height) / 2 + window.scrollY}px`;
+          let x={
+              top:{
+                  left:left + window.scrollX,
+                  top:top + window.scrollY
+              },
+              bottom:{
+                  left:left + window.scrollX,
+                  top:top + height + window.scrollY
+              },
+              left:{
+                  left:left + width + window.scrollX,
+                  top:top - Math.abs(heightc - height) / 2 + window.scrollY
+              },
+              right:{
+                  left:left + window.scrollX,
+                  top:top - Math.abs(heightc - height) / 2 + window.scrollY
+              }
           }
-
+          const position = this.position;
+          contentWrapper.style.left = x[this.position].left+'px';
+          contentWrapper.style.top =  x[this.position].top+'px'
       },
     onClickDocument(e) {
       if (
