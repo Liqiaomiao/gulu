@@ -68,8 +68,7 @@
                     let index = names.indexOf(this.getSelected());
                     let nameIndex= index+1;
                     if(nameIndex===names.length){nameIndex=0}
-                    // let nameIndex= index-1;
-                    // if(nameIndex===-1){nameIndex=names.length-1}
+                    if(nameIndex===-1){nameIndex=names.length-1}
                     this.select(nameIndex);
                     this.timerId =  setTimeout(run,3000)
                 };
@@ -84,14 +83,16 @@
                 let names = this.names;
                 this.$children.forEach(vm=>{
                  var   reverse =this.selectedIndex < this.lastSelectedIndex;//false不加reverse,向左移动
-                    //确定向左移动的情况下，由最后一个到第一个
-                    if(this.lastSelectedIndex === this.names.length-1 && this.selectedIndex==0){ reverse=false}
-                    //确定向右移动的情况下
-                    if(this.lastSelectedIndex ==0 && this.selectedIndex==this.names.length-1){reverse=true}
+                    if(this.timerId){//如果用户手动点的时候就不应该是无缝的
+                        //确定向左移动的情况下，由最后一个到第一个
+                        if(this.lastSelectedIndex === this.names.length-1 && this.selectedIndex==0){ reverse=false}
+                        //确定向右移动的情况下
+                        if(this.lastSelectedIndex ==0 && this.selectedIndex==this.names.length-1){reverse=true}
+                    }
+
                     vm.reverse = reverse;
                     //确保在动画前reverse已经生效
                     this.$nextTick(()=> vm.selected=selected )
-
                 })
 
 
@@ -112,7 +113,25 @@
     }
     &-wrapper{ position: relative;width: 100%;}
     &-dots{
-        .active{background: red;}
+        padding: 8px 0;
+        display: flex;
+        justify-content: center;
+        >span{
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: #ddd;
+            border-radius: 50%;
+            margin:0 8px;
+            font-size: 12px;
+            cursor: pointer;
+            &.active{
+                background: #000;
+                color:#fff;
+                cursor: default;}
+        }
     }
 }
 </style>
