@@ -1,52 +1,10 @@
 <template>
     <div style="padding: 20px;">
-
-  <!--      <g-cascader :source.sync="source" gheight="160px;"
-                    :selected.sync="selected"
-        ></g-cascader>-->
-        <div>
-            <g-cascader :source.sync="source" gheight="160px;"
-                        :selected.sync="selected"
-                        :load-data="loadData"
-            ></g-cascader>
-
-        </div>
-        <div style="padding-top:200px;">
-            <g-popover >
-                <g-button>click</g-button>
-                <template slot="content" :slot-scope="{close}"><g-button @click="close">关闭</g-button></template>
-            </g-popover>
-            <g-popover :position="'bottom'">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-            <g-popover :position="'left'">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-            <g-popover :position="'right'">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-        </div>
-        <div style="padding-top:200px;">
-            <g-popover trigger="hover">
-                <g-button >click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-            <g-popover :position="'bottom'" trigger="hover">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-            <g-popover :position="'left'" trigger="hover">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-            <g-popover :position="'right'" trigger="hover">
-                <g-button>click</g-button>
-                <template slot="content">ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
-            </g-popover>
-        </div>
+        <g-slides :selected.sync="selected">
+            <g-slides-items name="hello"><div class="box">1</div></g-slides-items>
+            <g-slides-items name="world"><div class="box">2</div></g-slides-items>
+            <g-slides-items name="3"><div class="box">3</div></g-slides-items>
+        </g-slides>
     </div>
 </template>
 <style lang="scss">
@@ -55,119 +13,32 @@
         padding: 0;
         box-sizing: border-box;
     }
-
-    :root {
-        --button-height: 32px;
-        --button-bg: white;
-        --button-active-bg: #eee;
-        --font-size: 14px;
-        --border-radius: 4px;
-        --color: #999;
-        --border-color:#d9d9d9;
-        --border-color-hover: #666;
-    }
-    body {
-        font-size: 14px;
+    .box{
+        width: 100%;
+        height: 400px;
+        background: #ddd;
+        border: 1px solid red;
     }
 
-    #app {
-        margin: 20px;
-    }
 </style>
 <script>
-import gButton from "./Button";
-import gCascader from "./cascader.vue";
-import db from './db'
-import gPopover from './popover.vue'
-/*function ajax1(parentId=0,success,fail) {
-    let id=setTimeout(()=>{
-        let result =  db.filter(item=>item.parent_id===parentId);
-        success(result)
-    },3000)
-   return id
-}*/
-function ajax(parentId=0,success,fail) {
-    return new Promise((success,fail)=>{
-        setTimeout(()=>{
-            let result =  db.filter(item=>item.parent_id===parentId);
-            result.forEach(node=>{
-             let flag =    db.filter(item=>{
-                  return  item.parent_id==node.id;
-                }).length>0;
-                node.isLeaf = !flag;
-            });
-            success(result)
-        },1000)
-
-    })
-}
-
+import GSlides from './slides'
+import GSlidesItems from './slidesItems'
 export default {
     data() {
         return {
-            selected: [],
-            source:[],
-            level:0
+            selected:'world'
         };
     },
     components: {
-        gButton,
-        gCascader,
-        gPopover
+        GSlides,
+        GSlidesItems
     },
     methods:{
-        onChangeSelected(copy){
-            this.selected=copy
-        },
-        loadData(node,fn){
-            let id = node.id;
-            ajax(id).then(result=>{
-                fn(result)
-            })
-        }
     },
-    created(){
-        //动态
-        ajax(0).then((data)=>{
-            this.source=data;
-        })
-        //静态
-      /*  this.source= [
-            {
-                name: "浙江",
-                children: [
-                    {
-                        name: "杭州",
-                        children: [
-                            {name: "上城区"},
-                            {name: "下城区"},
-                            {name: "江干区"}
-                        ]
-                    },
-                    {
-                        name: "嘉兴",
-                        children: [
-                            {name: "南湖区"},
-                            {name: "秀洲区"},
-                            {name: "嘉善区"}
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "福建",
-                children: [
-                    {
-                        name: "福州市",
-                        children: [
-                            {name: "鼓楼区"},
-                            {name: "台州区"},
-                            {name: "苍山区"}
-                        ]
-                    }
-                ]
-            }
-        ]*/
+    created() {
+    },
+    watch:{
     }
 };
 </script>
