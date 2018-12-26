@@ -72,10 +72,10 @@
                 let selected = this.getSelected();
                 let names = this.names;
                 this.$children.forEach(vm=>{
-                    vm.selected=selected;
-                    let newIndex = names.indexOf(selected);
-                    let oldIndex = names.indexOf(vm.name);
                     vm.reverse =  this.lastSelectedIndex < this.selectedIndex?false:true;
+                    //确保在动画前reverse已经生效
+                    this.$nextTick(()=> vm.selected=selected )
+
                 })
 
 
