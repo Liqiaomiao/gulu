@@ -6,7 +6,10 @@
             </div>
 
         </div>
-
+        <div class="g-slides-dots">
+            <span :class="{active:n-1==names.indexOf(selected)}" @click="select(n-1)"
+            v-for="n in childrenLength ">{{n}}</span>
+        </div>
     </div>
 </template>
 
@@ -22,9 +25,25 @@
                 default:true
             }
         },
+        data(){
+            return{
+                childrenLength:0,
+                lastSelectedIndex:0
+            }
+        },
+        computed:{
+            selectedIndex(){
+                return this.names.indexOf(this.selected)
+            },
+            names(){
+                return   this.$children.map(item=> item.name);
+            }
+        },
         mounted(){
             this.updateChildren();
             this.playAutomatically();
+            this.childrenLength=this.$children.length;
+            this.lastSelectedIndex=this.names.indexOf(this.selected);
         },
         updated() {
             this.updateChildren()
@@ -32,8 +51,7 @@
         },
         methods:{
             playAutomatically(){
-                const names = this.getNames();
-
+                const names = this.names;
                 let run = ()=>{
                     let index = names.indexOf(this.getSelected());
                     let nameIndex= index+1;
@@ -44,24 +62,27 @@
                     this.$emit('update:selected',names[nameIndex]);
                     setTimeout(run,3000)
                 };
-                setTimeout(run,3000);
+               // setTimeout(run,3000);
             },
             getSelected(){
                 let first =this.$children[0];
                return  this.selected||first.name
             },
-            getNames(){
-               return   this.$children.map(item=> item.name);
-            },
             updateChildren(){
                 let selected = this.getSelected();
-                let names = this.getNames();
+                let names = this.names;
                 this.$children.forEach(vm=>{
                     vm.selected=selected;
                     let newIndex = names.indexOf(selected);
                     let oldIndex = names.indexOf(vm.name);
-                    vm.reverse =  newIndex > oldIndex?false:true;
+                    vm.reverse =  this.lastSelectedIndex < this.selectedIndex?false:true;
                 })
+
+
+            },
+            select(val){
+                this.$emit('update:selected',this.names[val]);
+                this.lastSelectedIndex=this.selectedIndex;
             }
         }
     }
@@ -75,5 +96,8 @@
         overflow: hidden;
     }
     &-wrapper{ position: relative;width: 100%;}
+    &-dots{
+        .active{background: red;}
+    }
 }
 </style>
