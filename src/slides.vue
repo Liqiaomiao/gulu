@@ -1,5 +1,5 @@
 <template>
-    <div class="g-slides">
+    <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" class="g-slides">
         <div class="g-slides-window">
             <div class="g-slides-wrapper">
                 <slot></slot>
@@ -28,7 +28,8 @@
         data(){
             return{
                 childrenLength:0,
-                lastSelectedIndex:0
+                lastSelectedIndex:0,
+                timerId:undefined
             }
         },
         computed:{
@@ -50,7 +51,18 @@
 
         },
         methods:{
+            onMouseEnter(){
+                this.pause()
+            },
+            onMouseLeave(){
+                this.playAutomatically()
+            },
+            pause(){
+                clearInterval(this.timerId);
+                this.timerId=undefined;
+            },
             playAutomatically(){
+                if(this.timerId){return}
                 const names = this.names;
                 let run = ()=>{
                     let index = names.indexOf(this.getSelected());
@@ -58,11 +70,10 @@
                     if(nameIndex===names.length){nameIndex=0}
                     // let nameIndex= index-1;
                     // if(nameIndex===-1){nameIndex=names.length-1}
-
-                    this.$emit('update:selected',names[nameIndex]);
-                    setTimeout(run,3000)
+                    this.select(nameIndex);
+                    this.timerId =  setTimeout(run,3000)
                 };
-               // setTimeout(run,3000);
+              this.timerId =  setTimeout(run,3000);
             },
             getSelected(){
                 let first =this.$children[0];
@@ -72,7 +83,12 @@
                 let selected = this.getSelected();
                 let names = this.names;
                 this.$children.forEach(vm=>{
-                    vm.reverse =  this.lastSelectedIndex < this.selectedIndex?false:true;
+                 var   reverse =this.selectedIndex < this.lastSelectedIndex;//false不加reverse,向左移动
+                    //确定向左移动的情况下，由最后一个到第一个
+                    if(this.lastSelectedIndex === this.names.length-1 && this.selectedIndex==0){ reverse=false}
+                    //确定向右移动的情况下
+                    if(this.lastSelectedIndex ==0 && this.selectedIndex==this.names.length-1){reverse=true}
+                    vm.reverse = reverse;
                     //确保在动画前reverse已经生效
                     this.$nextTick(()=> vm.selected=selected )
 
@@ -90,7 +106,6 @@
 
 <style scoped lang="scss">
 .g-slides{
-    border: 1px solid #000;
     &-window{
         display: flex;
         overflow: hidden;
