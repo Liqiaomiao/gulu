@@ -13,15 +13,19 @@
 
         </div>
         <div class="g-slides-dots">
-            <span :class="{active:n-1==names.indexOf(selected)}" @click="select(n-1)"
+            <span @click="select(selectedIndex-1)"><g-icon name="left"></g-icon></span>
+            <span :class="{active:n-1==selectedIndex}" @click="select(n-1)"
             v-for="n in childrenLength ">{{n}}</span>
+            <span @click="select(selectedIndex+1)"><g-icon name="right"></g-icon></span>
         </div>
     </div>
 </template>
 
 <script>
+    import GIcon from './icon'
     export default {
         name: "slides",
+        components:{GIcon},
         props:{
             selected:{
                 type:String
@@ -41,16 +45,21 @@
         },
         computed:{
             selectedIndex(){
-                return this.names.indexOf(this.selected)
+                let index = this.names.indexOf(this.selected);
+                return index===-1?0:index;
             },
             names(){
-                return   this.$children.map(item=> item.name);
+                return  this.items.map(item=> item.name);
+            },
+            items(){
+
+                return  this.$children.filter(vm=>vm.$options.name=='slidesItems' );
             }
         },
         mounted(){
             this.updateChildren();
             this.playAutomatically();
-            this.childrenLength=this.$children.length;
+            this.childrenLength=this.items.length;
             this.lastSelectedIndex=this.names.indexOf(this.selected);
         },
         updated() {
@@ -77,9 +86,9 @@
                 let rate = Math.abs(bowstring/(y2-y1));
                 if(rate>2){//小于30°算是左右滑动；
                     if(x2>x1){
-                        this.select(this.selectedIndex+1)
-                    }else{
                         this.select(this.selectedIndex-1)
+                    }else{
+                        this.select(this.selectedIndex+1)
                     }
                 }
                 this.$nextTick(()=>{
@@ -104,13 +113,13 @@
               this.timerId =  setTimeout(run,3000);
             },
             getSelected(){
-                let first =this.$children[0];
+                let first =this.items[0];
                return  this.selected||first.name
             },
             updateChildren(){
                 let selected = this.getSelected();
                 let names = this.names;
-                this.$children.forEach(vm=>{
+                this.items.forEach(vm=>{
                  var   reverse =this.selectedIndex < this.lastSelectedIndex;//false不加reverse,向左移动
                     if(this.timerId){//如果用户手动点的时候就不应该是无缝的
                         //确定向左移动的情况下，由最后一个到第一个

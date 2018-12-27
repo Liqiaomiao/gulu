@@ -30,7 +30,7 @@ import GSlidesItems from './slidesItems'
 export default {
     data() {
         return {
-            selected:'world'
+            selected:undefined
         };
     },
     components: {
