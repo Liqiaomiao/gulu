@@ -1,5 +1,11 @@
 <template>
-    <div @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" class="g-slides">
+    <div
+            @mouseenter="onMouseEnter"
+            @mouseleave="onMouseLeave"
+            @touchend ="onTouchEnd"
+            @touchmove="onTouchMove"
+            @touchstart="ontTouchStart"
+            class="g-slides">
         <div class="g-slides-window">
             <div class="g-slides-wrapper">
                 <slot></slot>
@@ -29,7 +35,8 @@
             return{
                 childrenLength:0,
                 lastSelectedIndex:0,
-                timerId:undefined
+                timerId:undefined,
+                touchStart:''
             }
         },
         computed:{
@@ -57,6 +64,29 @@
             onMouseLeave(){
                 this.playAutomatically()
             },
+            ontTouchStart({touches}){
+                this.touchStart= touches[0];
+                this.pause()
+            },
+            onTouchMove(){},
+            onTouchEnd({changedTouches}){
+
+                let {clientX:x1,clientY:y1} = this.touchStart;
+                let {clientX:x2,clientY:y2} = changedTouches[0];
+                let bowstring = Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
+                let rate = Math.abs(bowstring/(y2-y1));
+                if(rate>2){//小于30°算是左右滑动；
+                    if(x2>x1){
+                        this.select(this.selectedIndex+1)
+                    }else{
+                        this.select(this.selectedIndex-1)
+                    }
+                }
+                this.$nextTick(()=>{
+                    this.playAutomatically();
+                })
+
+            },
             pause(){
                 clearInterval(this.timerId);
                 this.timerId=undefined;
@@ -67,8 +97,7 @@
                 let run = ()=>{
                     let index = names.indexOf(this.getSelected());
                     let nameIndex= index+1;
-                    if(nameIndex===names.length){nameIndex=0}
-                    if(nameIndex===-1){nameIndex=names.length-1}
+
                     this.select(nameIndex);
                     this.timerId =  setTimeout(run,3000)
                 };
@@ -97,8 +126,11 @@
 
 
             },
-            select(val){
-                this.$emit('update:selected',this.names[val]);
+            select(nextIndex){
+                let names = this.names;
+                if(nextIndex===names.length){nextIndex=0}
+                if(nextIndex===-1){nextIndex=names.length-1}
+                this.$emit('update:selected',names[nextIndex]);
                 this.lastSelectedIndex=this.selectedIndex;
             }
         }
