@@ -13,10 +13,12 @@
 
         </div>
         <div class="g-slides-dots">
-            <span @click="select(selectedIndex-1)"><g-icon name="left"></g-icon></span>
+            <span @click="select(selectedIndex-1)" data-action="prev"><g-icon name="left"></g-icon></span>
             <span :class="{active:n-1==selectedIndex}" @click="select(n-1)"
-            v-for="n in childrenLength ">{{n}}</span>
-            <span @click="select(selectedIndex+1)"><g-icon name="right"></g-icon></span>
+            :data-index="n"
+                  :key="n" v-for="n in childrenLength "
+            >{{n}}</span>
+            <span @click="select(selectedIndex+1)"  data-action="next"><g-icon name="right"></g-icon></span>
         </div>
     </div>
 </template>
@@ -33,6 +35,10 @@
             autoPlay:{
                 type:Boolean,
                 default:true
+            },
+            autoPlayDelay:{
+                type:Number,
+                default: 3000
             }
         },
         data(){
@@ -85,22 +91,18 @@
                 let bowstring = Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
                 let rate = Math.abs(bowstring/(y2-y1));
                 if(rate>2){//小于30°算是左右滑动；
-                    if(x2>x1){
-                        this.select(this.selectedIndex-1)
-                    }else{
-                        this.select(this.selectedIndex+1)
-                    }
+                    x2>x1? this.select(this.selectedIndex-1):this.select(this.selectedIndex+1)
                 }
                 this.$nextTick(()=>{
                     this.playAutomatically();
                 })
-
             },
             pause(){
                 clearInterval(this.timerId);
                 this.timerId=undefined;
             },
             playAutomatically(){
+                if( !this.autoPlay){return}
                 if(this.timerId){return}
                 const names = this.names;
                 let run = ()=>{
@@ -108,9 +110,9 @@
                     let nameIndex= index+1;
 
                     this.select(nameIndex);
-                    this.timerId =  setTimeout(run,3000)
+                    this.timerId =  setTimeout(run,this.autoPlayDelay)
                 };
-              this.timerId =  setTimeout(run,3000);
+              this.timerId =  setTimeout(run,this.autoPlayDelay);
             },
             getSelected(){
                 let first =this.items[0];
@@ -121,12 +123,12 @@
                 let names = this.names;
                 this.items.forEach(vm=>{
                  var   reverse =this.selectedIndex < this.lastSelectedIndex;//false不加reverse,向左移动
-                    if(this.timerId){//如果用户手动点的时候就不应该是无缝的
+                    //if(this.timerId){//如果用户手动点的时候就不应该是无缝的
                         //确定向左移动的情况下，由最后一个到第一个
                         if(this.lastSelectedIndex === this.names.length-1 && this.selectedIndex==0){ reverse=false}
                         //确定向右移动的情况下
                         if(this.lastSelectedIndex ==0 && this.selectedIndex==this.names.length-1){reverse=true}
-                    }
+                  //  }
 
                     vm.reverse = reverse;
                     //确保在动画前reverse已经生效
