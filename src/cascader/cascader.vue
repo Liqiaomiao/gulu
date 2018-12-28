@@ -158,7 +158,7 @@
     };
 </script>
 <style lang="scss" scoped>
-@import "../var";
+@import "var";
 .cascader {
     display:inline-block;
   .trigger {

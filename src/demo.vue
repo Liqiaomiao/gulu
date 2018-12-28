@@ -1,5 +1,6 @@
 <template>
     <div style="padding: 20px;">
+        <g-button>456</g-button>
         <g-slides :selected.sync="selected">
             <g-slides-items name="hello"><div class="box">1</div></g-slides-items>
             <g-slides-items name="world"><div class="box">2</div></g-slides-items>
@@ -27,6 +28,7 @@
 <script>
 import GSlides from './slides/slides'
 import GSlidesItems from './slides/slidesItems'
+import GButton from './button/Button.vue'
 export default {
     data() {
         return {
@@ -35,7 +37,8 @@ export default {
     },
     components: {
         GSlides,
-        GSlidesItems
+        GSlidesItems,
+        GButton
     },
     methods:{
     },

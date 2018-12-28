@@ -21,7 +21,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-@import "../var";
+@import "var";
 .cascaderItem {
   display: flex;
   height: 100%;
