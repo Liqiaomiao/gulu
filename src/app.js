@@ -3,9 +3,9 @@
  */
 import Vue from 'vue'
 import plugin from './plugin'
-import Button from './button.vue'
+import Button from './button/Button.vue'
 import Icon from './icon.vue'
-import ButtonGroup from './button-group.vue'
+import ButtonGroup from './button/button-group.vue'
 import Input from './Input.vue'
 import Tabs from './tabs.vue'
 import TabsHead from './tabs-head.vue'

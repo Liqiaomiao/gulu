@@ -11,7 +11,7 @@
 
 <script>
 import Vue from "vue";
-import Icon from "./icon.vue";
+import Icon from "../icon.vue";
 Vue.component("g-icon", Icon);
 export default {
   name: "",
@@ -32,7 +32,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "var.scss";
+@import "../var";
 
 
 
