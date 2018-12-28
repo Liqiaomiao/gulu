@@ -21,7 +21,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-@import "./var.scss";
+@import "../var";
 .cascaderItem {
   display: flex;
   height: 100%;
@@ -64,7 +64,7 @@
 }
 </style>
 <script>
-    import Icon from "./icon.vue";
+    import Icon from "../icon/icon.vue";
     export default {
         name: "cascaderItem",
         components: {

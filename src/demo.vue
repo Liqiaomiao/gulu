@@ -25,8 +25,8 @@
 
 </style>
 <script>
-import GSlides from './slides'
-import GSlidesItems from './slidesItems'
+import GSlides from './slides/slides'
+import GSlidesItems from './slides/slidesItems'
 export default {
     data() {
         return {

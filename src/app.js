@@ -4,16 +4,16 @@
 import Vue from 'vue'
 import plugin from './plugin'
 import Button from './button/Button.vue'
-import Icon from './icon.vue'
+import Icon from './icon/icon.vue'
 import ButtonGroup from './button/button-group.vue'
 import Input from './Input.vue'
-import Tabs from './tabs.vue'
-import TabsHead from './tabs-head.vue'
-import TabsBody from './tabs-body.vue'
-import TabsItem from './tabs-item.vue'
-import TabsPane from './tabs-pane.vue'
+import Tabs from './tabs/tabs.vue'
+import TabsHead from './tabs/tabs-head.vue'
+import TabsBody from './tabs/tabs-body.vue'
+import TabsItem from './tabs/tabs-item.vue'
+import TabsPane from './tabs/tabs-pane.vue'
 
-import Popover from './popover.vue'
+import Popover from './popover/popover.vue'
 
 Vue.component('g-button',Button);
 Vue.component('g-icon',Icon);

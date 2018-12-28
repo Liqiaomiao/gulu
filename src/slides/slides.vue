@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import GIcon from './icon'
+    import GIcon from '../icon/icon'
     export default {
         name: "slides",
         components:{GIcon},

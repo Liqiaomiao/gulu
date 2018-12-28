@@ -11,7 +11,7 @@
 
 <script>
 import Vue from "vue";
-import Icon from "../icon.vue";
+import Icon from "../icon/icon.vue";
 Vue.component("g-icon", Icon);
 export default {
   name: "",
