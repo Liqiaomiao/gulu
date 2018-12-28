@@ -5,94 +5,87 @@
         <div class="content">
             <slot></slot>
         </div>
-
     </button>
 
 </template>
 
 <script>
-    import Vue from  'vue'
-    import  Icon from './icon.vue'
-    Vue.component('g-icon',Icon);
-    export default{
-        name:'',
-        props: {
-            icon: {},
-            loading: {
-                type: Boolean,
-                default: false
-            },
-            iconPosition: {
-                type: String,
-                default: 'left',
-                validator(value){
-                    return value == 'left' || value == 'right';
-                }
-            }
-        }
+import Vue from "vue";
+import Icon from "./icon.vue";
+Vue.component("g-icon", Icon);
+export default {
+  name: "",
+  props: {
+    icon: {},
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    iconPosition: {
+      type: String,
+      default: "left",
+      validator(value) {
+        return value == "left" || value == "right";
+      }
     }
+  }
+};
 </script>
 <style lang="scss" scoped>
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
+@import "var.scss";
 
-    .loading {
-        width: 1em;
-        height: 1em;
-        animation: spin 2s infinite linear;
-    }
 
-    .g-button {
-        vertical-align: middle;
-        height: var(--button-height);
-        font: inherit;
-        border-radius: var(--border-radius);
-        border: 1px solid var(--border-color);
-        background: var(--button-bg);
-        padding: 0 1em;
-        display: inline-flex;
-        justify-content: center;
-        vertical-align: middle;
-        align-items: center;
-        padding: 0 1em;
 
-    &:hover {
-        border-color: var(--border-color-hover);
-    }
+.loading {
+  width: 1em;
+  height: 1em;
+  animation: spin 2s infinite linear;
+}
 
-    &:active {
-        background: var(--button-active-bg);
-    }
+.g-button {
+  vertical-align: middle;
+  height: $button-height;
+  font: inherit;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  background: $button-bg;
+  padding: 0 1em;
+  display: inline-flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  padding: 0 1em;
 
-    &:focus {
-        outline: none;
-    }
+  &:hover {
+    border-color: $border-color-hover;
+  }
 
-    >.icon {
-        order: 1;
-        margin-right: .1em;
-    }
+  &:active {
+    background: $button-active-bg;
+  }
 
-    >.content {
-        order: 2
-    }
-    }
-    .g-button.icon-right {
-    >.icon {
-         order: 2;
-         margin-right: 0;
-         margin-left: .1em
-     }
+  &:focus {
+    outline: none;
+  }
 
-    >.content {
-         order: 1
-     }
+  > .icon {
+    order: 1;
+    margin-right: 0.1em;
+  }
 
-    }
+  > .content {
+    order: 2;
+  }
+}
+.g-button.icon-right {
+  > .icon {
+    order: 2;
+    margin-right: 0;
+    margin-left: 0.1em;
+  }
+
+  > .content {
+    order: 1;
+  }
+}
 </style>

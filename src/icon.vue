@@ -1,19 +1,26 @@
 <style lang="scss" scoped>
-    .icon {
-        height: 1em;
-        width: 1em;
-    }
+.icon {
+  height: 1em;
+  width: 1em;
+}
 </style>
 <template>
-        <svg v-if="name" class="icon">
+        <svg v-if="name" :class="['icon',classname] ">
             <use :xlink:href="`#i-${name}`"></use>
         </svg>
 
 </template>
 
 <script>
-    import './svg'
-    export default{
-        props:['name']
-    }
+import "./svg";
+export default {
+  props: {
+      name:{
+          type:String
+      },
+      classname:{
+          type:String
+      }
+  }
+};
 </script>

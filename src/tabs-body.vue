@@ -5,13 +5,12 @@
 </template>
 
 <script>
-    export default {
-        name: "GuluTabsBody"
-    }
+export default {
+  name: "GuluTabsBody"
+};
 </script>
 
 <style scoped>
-.tabs-body{
-
+.tabs-body {
 }
 </style>
