@@ -1,23 +1,36 @@
 <template>
-    <div :class="{active}" class="g-sub-nav">
+    <div :class="{active}" class="g-sub-nav" v-click-outside="close">
        <span @click="open=!open" class="g-sub-nav-label">
            <slot name="title"></slot>
+           <g-icon :class="{open}" class="g-sub-nav-icon" name="right"></g-icon>
        </span>
-       <div class="g-sub-nav-popover" v-show="open">
-           <slot></slot>
-       </div>
+       <transition @enter="enter" @leave="leave"  v-on:after-enter="afterEnter">
+           <div class="g-sub-nav-popover" v-show="open">
+               <slot></slot>
+           </div>
+       </transition>
+
     </div>
 </template>
 
 <script>
+    import clickOutside from '../click-outside'
+    import {removeListener} from '../click-outside'
+    import GIcon from '../icon/icon'
     export default {
         name: "GuluSubNav",
         inject:['root'],
+        components:{
+            GIcon
+        },
         props:{
             name:{
                 type:String,
                 required:true
             }
+        },
+        directives:{
+            clickOutside
         },
         data(){
             return {
@@ -31,10 +44,31 @@
             }
         },
         methods:{
+            afterEnter(el){
+                el.style.height='auto';
+            },
+            enter(el,done){
+                el.style.height='auto';
+                let {height} = el.getBoundingClientRect();
+                el.style.height=0;
+                el.getBoundingClientRect();//必须算出高度才能进行的操作
+                el.style.height=`${height}px`;
+                el.addEventListener('transitionend',()=>{done()})
+            },
+            leave(el,done){
+                let {height} = el.getBoundingClientRect();
+                el.style.height=`${height}px`;
+                el.getBoundingClientRect();
+                el.style.height=0;
+                el.addEventListener('transitionend',()=>{done()})
+            },
             updatePathName(){
-                this.root.pathName.unshift(this.name)
+                this.root.pathName.unshift(this.name);
                 this.$parent.updatePathName && this.$parent.updatePathName();
 
+            },
+            close(){
+                this.open=false;
             }
         }
     }
@@ -68,18 +102,22 @@
             font-size: $font-size;
             color: $light-color;
             min-width: 8em;
+            transition: all 1s;
+            overflow: hidden;
+
         }
     }
     .g-sub-nav .g-sub-nav {
-        /*&.active {*/
-            /*&::after {*/
-                /*display: none;*/
-            /*}*/
-        /*}*/
+        &.active {
+            &::after {
+                display: none;
+            }
+        }
         .g-sub-nav-popover {
             top: 0;
             left: 100%;
             margin-left: 8px;
+
         }
         .g-sub-nav-label {
             display: flex;
@@ -94,5 +132,18 @@
                 transform: rotate(180deg);
             }
         }
+    }
+    .vertical .g-sub-nav-popover {
+        position: static;
+        left: 0!important;
+        top: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .slide-enter-active,.slide-leave-active{
+        transition: all 1s;
+    }
+    .slide-enter,.slide-leave-to{
+        opacity: 0;
     }
 </style>
