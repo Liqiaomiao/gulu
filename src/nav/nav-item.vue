@@ -26,7 +26,7 @@
             onClick(){
                 this.root.pathName=[];
                 this.$parent.updatePathName && this.$parent.updatePathName();
-                this.$emit("add:selected",this.name);
+                this.$emit("update:selected",this.name);
 
             }
         }

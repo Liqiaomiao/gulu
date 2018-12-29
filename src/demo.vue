@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 20px;">
-        <g-nav :selected.sync = "selected" style="width: 200px;" vertical>
+        <g-nav :selected.sync = "selected" >
             <g-nav-item name="home">首页</g-nav-item>
             <g-sub-nav name="about">
                 <template slot="title">关于</template>
@@ -19,7 +19,6 @@
             </g-sub-nav>
             <g-nav-item name="hire">招聘</g-nav-item>
         </g-nav>
-        <p>5455555555555555555</p>
     </div>
 </template>
 <style lang="scss">
@@ -37,15 +36,16 @@ import GSubNav from './nav/sub-nav'
 export default {
     data() {
         return {
-            selected:['home']
+            selected:'home'
         };
     },
     components: {GSubNav, GNav, GNavItem},
     methods:{
+        onchange(val){
+            console.log(val)
+        }
     },
     created() {
-    },
-    watch:{
     }
 };
 </script>
