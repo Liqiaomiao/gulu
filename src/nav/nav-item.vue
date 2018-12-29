@@ -1,0 +1,41 @@
+<template>
+    <div :class="{selected}" @click="onClick" class="g-nav-item">
+        <slot></slot>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "GuluNavItem",
+        inject:['root'],
+        props:{
+            name:{
+                type:String,
+                required:true
+            },
+        },
+        data(){
+            return {
+                selected: false
+            }
+        },
+        created() {
+            this.root.addItem(this)
+        },
+        methods:{
+            onClick(){
+                this.$emit("add:selected",this.name)
+            }
+        }
+    }
+</script>
+
+<style scoped lang="scss">
+.g-nav-item{
+    padding: 10px 20px;
+    &.selected{
+        background: red;
+        color: #fff;
+    }
+}
+</style>

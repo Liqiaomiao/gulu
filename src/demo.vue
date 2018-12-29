@@ -1,11 +1,24 @@
 <template>
     <div style="padding: 20px;">
-        <g-button>456</g-button>
-        <g-slides :selected.sync="selected">
-            <g-slides-items name="hello"><div class="box">1</div></g-slides-items>
-            <g-slides-items name="world"><div class="box">2</div></g-slides-items>
-            <g-slides-items name="3"><div class="box">3</div></g-slides-items>
-        </g-slides>
+        <g-nav :selected.sync = "selected">
+            <g-nav-item name="home">首页</g-nav-item>
+            <g-sub-nav name="about">
+                <template slot="title">关于</template>
+                <g-nav-item name="1">关于我们</g-nav-item>
+                <g-nav-item name="2">招聘信息</g-nav-item>
+                <g-sub-nav name="3">
+                    <template slot="title">联系方式</template>
+                    <g-nav-item name="3-1">微信</g-nav-item>
+                    <g-nav-item name="3-2">QQ</g-nav-item>
+                    <g-sub-nav name="3-3">
+                        <template slot="title">手机</template>
+                        <g-nav-item name="3-3-1">移动</g-nav-item>
+                        <g-nav-item name="3-3-2">联通</g-nav-item>
+                    </g-sub-nav>
+                </g-sub-nav>
+            </g-sub-nav>
+            <g-nav-item name="hire">招聘</g-nav-item>
+        </g-nav>
     </div>
 </template>
 <style lang="scss">
@@ -13,33 +26,20 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-    .box{
-        width: 100%;
-        height: 400px;
-        background: #ddd;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 30px;
-    }
 
+    }
 </style>
 <script>
-import GSlides from './slides/slides'
-import GSlidesItems from './slides/slidesItems'
-import GButton from './button/Button.vue'
+import GNav from './nav/nav'
+import GNavItem from './nav/nav-item'
+import GSubNav from './nav/sub-nav'
 export default {
     data() {
         return {
-            selected:undefined
+            selected:['home']
         };
     },
-    components: {
-        GSlides,
-        GSlidesItems,
-        GButton
-    },
+    components: {GSubNav, GNav, GNavItem},
     methods:{
     },
     created() {
