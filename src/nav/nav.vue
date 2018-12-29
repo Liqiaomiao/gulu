@@ -22,19 +22,20 @@
         },
         data(){
             return {
-               items:[]
+               items:[],
+               pathName:[]
             }
         },
         mounted (){
             this.updateChildren();
             this.items.forEach(vm=>{
                 vm.$on('add:selected',(name)=>{
+
                     if(this.multiple){
                         let copy = JSON.parse(JSON.stringify(this.selected));
                         if(copy.indexOf(name)==-1){
                             copy.push(name)
                         }
-                        console.log(copy);
                         this.$emit("update:selected",copy)
                     }else{
                         this.$emit("update:selected",[name])
@@ -48,6 +49,7 @@
         methods:{
             addItem(vm){
                 this.items.push(vm);
+
             },
             updateChildren(){
                 this.items.filter(vm=>{
@@ -59,15 +61,19 @@
                     }
 
                 })
-            }
+            },
+
         }
     }
 </script>
 
 <style scoped lang="scss">
-.g-nav{
+@import "var";
+.g-nav {
     display: flex;
-    border:1px solid red;
-
+    border-bottom: 1px solid $gray;
+    color: $color;
+    cursor: default;
+    user-select: none;
 }
 </style>

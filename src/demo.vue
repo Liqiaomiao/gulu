@@ -19,6 +19,7 @@
             </g-sub-nav>
             <g-nav-item name="hire">招聘</g-nav-item>
         </g-nav>
+        <p>5455555555555555555</p>
     </div>
 </template>
 <style lang="scss">
