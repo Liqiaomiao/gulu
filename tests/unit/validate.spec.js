@@ -78,7 +78,17 @@ describe('validate',()=>{
             {key:'email',pattern:'email',required:true}
         ];
         let errors = validate(data,rules);
-        console.log(errors);
         expect(errors.email.required).to.exist
+    })
+    it('require & minLength',()=>{
+        let data = {
+            email:''
+        };
+        let rules=[
+            {key:'email',pattern:'email',minLength:6}
+        ];
+        let errors = validate(data,rules);
+       expect(errors.email.pattern).to.eq('格式不正确');
+       expect(errors.email.minLength).to.eq('太短')
     })
 });
