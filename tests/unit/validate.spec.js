@@ -16,7 +16,7 @@ describe('validate',()=>{
             {key:'email',required:true}
         ];
         let errors = validate(data,rules);
-        expect(errors.email.required).to.eq('必填')
+      expect(errors.email.required).to.eq('必填')
 
     })
     it('required true 通过',()=>{
@@ -90,5 +90,15 @@ describe('validate',()=>{
         let errors = validate(data,rules);
        expect(errors.email.pattern).to.eq('格式不正确');
        expect(errors.email.minLength).to.eq('太短')
+    });
+    it('maxLength',()=>{
+        let data = {
+            email:'111@qq.com'
+        };
+        let rules=[
+            {key:'email',pattern:'email',maxLength:6}
+        ];
+        let errors = validate(data,rules);
+       expect(errors.email.maxLength).to.eq('太长')
     })
 });
