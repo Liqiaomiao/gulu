@@ -101,10 +101,31 @@ describe('validate',()=>{
         let errors = validate(data,rules);
        expect(errors.email.maxLength).to.eq('太长')
     })
-    it('complex',()=>{
+    it('many keys',()=>{
         let data={email:''};
         let rules=[
-            {key:'email',pattern:'email',minLength: 6,maxLength: 8}
+            {key:'email',pattern:'email',minLength: 6,maxLength: 8,hasNumber:true}
         ]
+        let fn=()=>{
+            validate(data,rules)
+        }
+        expect(fn).to.throw('不存在的校验器hasNumber')
+    })
+    it('own fn',()=>{
+        let data={email:''};
+        let rules=[
+            {key:'email',pattern:'email',minLength: 6,maxLength: 8,hasNumber:true}
+        ];
+        validate.hasNumber=(value)=>{
+            if(!/\d/.test(value)){
+                return '必须含有数字'
+            }
+        };
+        let errors=validate(data,rules);
+        let fn=()=>{
+            errors =   validate(data,rules)
+        };
+        expect(fn).to.not.throw();
+        expect(errors.email.hasNumber).to.eq('必须含有数字')
     })
 });

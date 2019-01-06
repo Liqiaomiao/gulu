@@ -8,11 +8,16 @@ export default  function validate(data,rules) {
         //遍历validators，并逐一调用对应的函数
         validators.forEach(validatekey=>{
            if(rule[validatekey]){
-               let error =  validate[validatekey] &&  validate[validatekey](value,rule[validatekey]);
-               if(error){
-                   ensureObj(errors,rule.key);
-                   errors[rule.key][validatekey]=error;
+               if( validate[validatekey] ){
+                   let error =  validate[validatekey](value,rule[validatekey]);
+                   if(error){
+                       ensureObj(errors,rule.key);
+                       errors[rule.key][validatekey]=error;
+                   }
+               }else {
+                   throw `不存在的校验器${validatekey}`
                }
+
            }
         });
         if(rule.required){
