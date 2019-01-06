@@ -101,4 +101,10 @@ describe('validate',()=>{
         let errors = validate(data,rules);
        expect(errors.email.maxLength).to.eq('太长')
     })
+    it('complex',()=>{
+        let data={email:''};
+        let rules=[
+            {key:'email',pattern:'email',minLength: 6,maxLength: 8}
+        ]
+    })
 });

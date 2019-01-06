@@ -2,34 +2,25 @@ export default  function validate(data,rules) {
     let errors={};
     rules.forEach(rule=>{
         let value = data[rule.key];
+        let validators = Object.keys(rule).filter(item=>{
+            return item!='key' && item!='required'
+        });
+        //遍历validators，并逐一调用对应的函数
+        validators.forEach(validatekey=>{
+           if(rule[validatekey]){
+               let error =  validate[validatekey] &&  validate[validatekey](value,rule[validatekey]);
+               if(error){
+                   ensureObj(errors,rule.key);
+                   errors[rule.key][validatekey]=error;
+               }
+           }
+        });
         if(rule.required){
             let error =  validate.required(value);
             if(error){
                 ensureObj(errors,rule.key);
                 errors[rule.key].required =error;
                 return
-            }
-        }
-        if(rule.pattern){
-            let error = validate.pattern(value,rule.pattern);
-            if(error){
-                ensureObj(errors,rule.key);
-                errors[rule.key].pattern =error;
-            }
-        }
-        if(rule.minLength){
-            let error = validate.minLength(value,rule.minLength);
-            if(error){
-                ensureObj(errors,rule.key);
-                errors[rule.key].minLength =error;
-            }
-        }
-        if(rule.maxLength){
-            let error = validate.maxLength(value,rule.maxLength);
-            console.log(error);
-            if(error){
-                ensureObj(errors,rule.key);
-                errors[rule.key].maxLength =error;
             }
         }
     });
