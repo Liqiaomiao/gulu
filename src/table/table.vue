@@ -1,16 +1,19 @@
 <template>
     <div class="gulu-table-wrapper">
+        {{selectedItems.length==dataSource.length}}
         <table :class="{bordered,striped,compact}" class="gulu-table">
             <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input :checked="selectedItems.length==dataSource.length" @change="onChangeAllItems" ref="allChecked" type="checkbox"></th>
                     <th v-if="numberVisible">id</th>
                     <th v-for="(colum,index) of columns">{{colum.text}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(data,index) of dataSource">
-                    <td><input @change="onChangeItem(data,index,$event)" type="checkbox"></td>
+                    <td><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
+                               type="checkbox"
+                    ></td>
                     <td v-if="numberVisible">{{index+1}}</td>
                     <template v-for="(colum,index) of columns ">
                         <td>{{data[colum.field]}}</td>
@@ -31,7 +34,10 @@
             },
             dataSource: {
                 type: Array,
-                required: true
+                required: true,
+                validator(array){
+                 return    !array.filter(item=>item.id==undefined).length>0
+                }
             },
             numberVisible: {
                 type: Boolean,
@@ -48,11 +54,45 @@
             compact:{
                 type:Boolean,
                 default:false
+            },
+            selectedItems:{
+                type:Array,
+                default:()=>[]
+            }
+        },
+        watch:{
+            selectedItems(value){
+                if(value.length==0){
+                    this.$refs.allChecked.indeterminate =false
+                }else if(value.length==this.dataSource.length){
+                    this.$refs.allChecked.indeterminate =false
+                }
+                else{
+                    this.$refs.allChecked.indeterminate =true
+                }
             }
         },
         methods:{
-            onChangeItem(item,index,e){
-                this.$emit('changeItem',{selected:e.target.checked,item,index})
+            inSelectedItems(data){
+                return  this.selectedItems.filter(item=>item.id==data.id).length>0;
+            },
+            onChangeItem(item,e){
+                let copy = JSON.parse(JSON.stringify(this.selectedItems));
+                if(e.target.checked){
+                    copy.push(item)
+                }else{
+                  let i ;
+                      copy.filter((copyitem,index)=>{
+                       if(copyitem.id==item.id){
+                          i = index
+                       }
+                    });
+                    copy.splice(i,1)
+                }
+                this.$emit('update:selectedItems',copy)
+            },
+            onChangeAllItems(e){
+                this.$emit('update:selectedItems',e.target.checked?this.dataSource:[])
             }
         }
     }
