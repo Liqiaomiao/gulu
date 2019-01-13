@@ -1,11 +1,25 @@
 <template>
     <div class="gulu-pager">
-        <span :class="{active:page===currentPage,separator:page=='...'}" class="gulu-pager-item"
-              v-for="(page,index) in pages">{{page}}</span>
+        <span @click="prev" class="gulu-pager-nav">
+            <g-icon name="left"></g-icon>
+        </span>
+        <template v-for="(page,index) in pages">
+            <template v-if="page==currentPage">
+                <span class="gulu-pager-item current">{{page}}</span>
+            </template>
+            <template v-else-if="page==='...'"><span class="gulu-pager-separator">...</span></template>
+            <a @click="pageChange(page)" class="gulu-pager-item" v-else>{{page}}</a>
+        </template>
+        <span @click="next" class="gulu-pager-nav">
+            <g-icon name="right"></g-icon>
+        </span>
+
     </div>
 </template>
 
 <script>
+    import GIcon from '../icon/icon'
+
     export default {
         name: 'GuluPager',
         props: {
@@ -22,12 +36,14 @@
                 default: true
             }
         },
-        data() {
-            let pages =
-                unique([1, this.currentPage,
+        components: {GIcon},
+        computed: {
+            pages() {
+                return unique([1, this.currentPage,
                     this.currentPage - 1, this.currentPage + 1,
                     this.currentPage - 2, this.currentPage + 2,
                     this.totalPage]
+                    .filter(item => item >= 1 && item <= this.totalPage)
                     .sort((a, b) => a - b))
                     .reduce((prev, next, index, arr) => {
                         if (arr[index + 1] != undefined && arr[index + 1] - arr[index] > 1) {
@@ -38,12 +54,21 @@
                         }
                         return prev
                     }, []);
-            return {
-                pages
+
             }
         },
-        mounted() {
-
+        methods: {
+            pageChange(page) {
+                if (page >= 1 && page <= this.totalPage) {
+                    this.$emit('update:currentPage', page)
+                }
+            },
+            prev(){
+                this.pageChange(this.currentPage-1)
+            },
+            next(){
+                this.pageChange(this.currentPage+1)
+            }
         }
     }
 
@@ -58,23 +83,66 @@
 </script>
 <style scoped lang='scss'>
     @import "var";
+
     .gulu-pager {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        user-select: none;
+        $width: 20px;
+        $height: 20px;
+        $font-size: 12px;
+
+        &.hide {
+            display: none;
+        }
+
+        &-separator {
+            width: $width;
+            font-size: $font-size;
+        }
+
         &-item {
-            border:1px solid #e1e1e1;
+            min-width: $width;
+            height: $height;
+            font-size: $font-size;
+            border: 1px solid #e1e1e1;
             border-radius: $border-radius;
             padding: 0 4px;
-            min-width:20px;
-            height: 20px;
             display: inline-flex;
             justify-content: center;
             align-items: center;
             margin: 0 4px;
-            &.active,&:hover{
-                border-color: #4a90e2;
+            cursor: pointer;
 
+            &.current, &:hover {
+                border-color: $blue;
             }
-            &.active,&.separator{cursor: default}
-            &.separator{border: none}
+
+            &.current {
+                cursor: default;
+            }
+        }
+
+        &-nav {
+            margin: 0 4px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: $gray;
+            height: $height;
+            width: $width;
+            border-radius: $border-radius;
+            font-size: $font-size;
+            cursor: pointer;
+
+            &.disabled {
+                cursor: default;
+
+                svg {
+                    fill: darken($gray, 30%);
+                }
+            }
         }
     }
 </style>

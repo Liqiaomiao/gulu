@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 20px;">
-        <g-pager :current-page="3" :total-page="20"></g-pager>
+        <g-pager :current-page.sync="currentPage" :total-page="20"></g-pager>
     </div>
 </template>
 <style lang="scss">
@@ -16,6 +16,7 @@
 export default {
     data() {
         return {
+            currentPage: 20
         };
     },
     components: {GPager},
