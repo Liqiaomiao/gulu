@@ -73,8 +73,21 @@
             }
         },
         computed:{
-            areAllItemsSelected(){
-             return    this.selectedItems.length==this.dataSource.length
+            areAllItemsSelected(){//由于使用了单向数据流，使用了深拷贝，所以不能只判断长度是否相等
+                const a = this.dataSource.map(item=>item.id).sort();
+                const b = this.selectedItems.map(item=>item.id).sort();
+                let equal = true;
+                if (a.length != b.length) {
+                    equal = false;
+                } else {
+                    for (let i = 0; i < a.lengthl; i++) {
+                        if (a[i] != b[i]) {
+                            equal = false
+                            break
+                        }
+                    }
+                }
+                return    equal
             }
 
         },
