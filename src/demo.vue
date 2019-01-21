@@ -29,6 +29,7 @@ export default {
                 {id:3,name:'钢铁侠',scour:100},
                 {id:4,name:'超人',scour:99},
                 ]
+
         };
     },
     components: {GPager,GTable},

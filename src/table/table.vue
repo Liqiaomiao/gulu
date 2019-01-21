@@ -4,7 +4,7 @@
         <table :class="{bordered,striped,compact}" class="gulu-table">
             <thead>
                 <tr>
-                    <th><input :checked="selectedItems.length==dataSource.length" @change="onChangeAllItems" ref="allChecked" type="checkbox"></th>
+                    <th><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked" type="checkbox"></th>
                     <th v-if="numberVisible">id</th>
                     <th v-for="(colum,index) of columns">{{colum.text}}</th>
                 </tr>
@@ -72,22 +72,23 @@
                 }
             }
         },
+        computed:{
+            areAllItemsSelected(){
+             return    this.selectedItems.length==this.dataSource.length
+            }
+
+        },
         methods:{
             inSelectedItems(data){
                 return  this.selectedItems.filter(item=>item.id==data.id).length>0;
             },
             onChangeItem(item,e){
+                let selected = e.target.checked;
                 let copy = JSON.parse(JSON.stringify(this.selectedItems));
-                if(e.target.checked){
+                if(selected){
                     copy.push(item)
                 }else{
-                  let i ;
-                      copy.filter((copyitem,index)=>{
-                       if(copyitem.id==item.id){
-                          i = index
-                       }
-                    });
-                    copy.splice(i,1)
+                    copy=  copy.filter((copyitem,index)=>copyitem.id!=item.id);
                 }
                 this.$emit('update:selectedItems',copy)
             },
