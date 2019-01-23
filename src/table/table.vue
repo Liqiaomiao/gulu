@@ -80,7 +80,7 @@
                 if (a.length != b.length) {
                     equal = false;
                 } else {
-                    for (let i = 0; i < a.lengthl; i++) {
+                    for (let i = 0; i < a.length; i++) {
                         if (a[i] != b[i]) {
                             equal = false
                             break
