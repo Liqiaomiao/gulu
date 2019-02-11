@@ -6,7 +6,15 @@
                 <tr>
                     <th><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked" type="checkbox"></th>
                     <th v-if="numberVisible">id</th>
-                    <th v-for="(colum,index) of columns">{{colum.text}}</th>
+                    <th v-for="(colum,index) of columns">
+                        <div class="gulu-table-header">
+                            {{colum.text}}
+                            <span @click="changeOrderBy(colum.field)" class="gulu-table-sorter" v-if="colum.field in orderBy">
+                                <g-icon :class="{active:orderBy[colum.field]=='asc'}" name="asc" ></g-icon>
+                                <g-icon :class="{active:orderBy[colum.field]=='desc'}" name="desc" ></g-icon>
+                            </span>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -25,9 +33,17 @@
 </template>
 
 <script>
+    import GIcon from '../icon/icon'
     export default {
         name: "Gulutable",
+        components:{
+            GIcon
+        },
         props: {
+            orderBy: {
+                type: Object,
+                default:()=>({})
+            },
             columns: {
                 type: Array,
                 required: true
@@ -92,6 +108,20 @@
 
         },
         methods:{
+            changeOrderBy(key) {
+                let oldvalue = this.orderBy[key];
+                let newval = '';
+                let oldobj = JSON.parse(JSON.stringify(this.orderBy));
+                if (oldvalue === 'asc') {
+                    newval = 'desc'
+                } else if (oldvalue === 'desc') {
+                    newval = true
+                } else {
+                    newval = 'asc'
+                }
+                oldobj[key] = newval;
+                this.$emit('update:orderBy', oldobj)
+            },
             inSelectedItems(data){
                 return  this.selectedItems.filter(item=>item.id==data.id).length>0;
             },

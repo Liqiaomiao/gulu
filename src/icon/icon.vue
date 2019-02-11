@@ -5,7 +5,7 @@
 }
 </style>
 <template>
-        <svg v-if="name" :class="['icon',classname] ">
+        <svg v-if="name" :class="['icon',classname]" @click="$emit('click',$event)">
             <use :xlink:href="`#i-${name}`"></use>
         </svg>
 

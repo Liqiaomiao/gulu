@@ -1,6 +1,14 @@
 <template>
     <div style="padding: 20px;">
-        <g-table :columns="columns" :data-source="dataSource"  :selectedItems.sync="selectedItems" bordered striped></g-table>
+        <g-table
+                :columns="columns"
+                :data-source="dataSource"
+                :order-by.sync="sortRules"
+                :selectedItems.sync="selectedItems"
+                @update:orderBy="x"
+                bordered
+                striped
+        ></g-table>
         <g-pager :current-page.sync="currentPage" :total-page="20"></g-pager>
     </div>
 </template>
@@ -21,20 +29,28 @@ export default {
             selectedItems:[],
             columns:[
                 {text:'姓名',field:'name'},
-                {text:'成绩',field:'scour'},
+                {text:'成绩',field:'score'},
                 ],
+            sortRules:{
+                name:'asc',
+                score:'desc'
+            },
             dataSource:[
-                {id:1,name:'方方',scour:100},
-                {id:2,name:'圆圆',scour:99},
-                {id:3,name:'钢铁侠',scour:100},
-                {id:4,name:'超人',scour:99},
+                {id:1,name:'方方',score:100},
+                {id:2,name:'圆圆',score:99},
+                {id:3,name:'钢铁侠',score:100},
+                {id:4,name:'超人',score:99},
                 ]
 
         };
     },
     components: {GPager,GTable},
     methods:{
-
+        x(){/* 模拟ajax排序*/
+            this.dataSource = this.dataSource.sort((a,b)=>{
+                return a.score-b.score
+            })
+        }
     },
     created() {
     }
