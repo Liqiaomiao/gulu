@@ -29,6 +29,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="gulu-table-loading" v-if="loading">
+            <g-icon name="loading"></g-icon>
+        </div>
     </div>
 </template>
 
@@ -40,6 +43,10 @@
             GIcon
         },
         props: {
+            loading: {
+              type:Boolean,
+              default: false
+            },
             orderBy: {
                 type: Object,
                 default:()=>({})
@@ -232,6 +239,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            svg {
+                @include spin
+            }
         }
 
         &-copy {

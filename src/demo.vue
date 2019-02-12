@@ -8,6 +8,7 @@
                 @update:orderBy="x"
                 bordered
                 striped
+                :loading="loading"
         ></g-table>
         <g-pager :current-page.sync="currentPage" :total-page="20"></g-pager>
     </div>
@@ -40,16 +41,21 @@ export default {
                 {id:2,name:'圆圆',score:99},
                 {id:3,name:'钢铁侠',score:100},
                 {id:4,name:'超人',score:99},
-                ]
+                ],
+            loading:false
 
         };
     },
     components: {GPager,GTable},
     methods:{
         x(){/* 模拟ajax排序*/
+            this.loading=true;
             this.dataSource = this.dataSource.sort((a,b)=>{
                 return a.score-b.score
             })
+            setTimeout(()=>{
+                this.loading=false;
+            },1000)
         }
     },
     created() {
