@@ -1,23 +1,25 @@
 <template>
-    <div class="gulu-table-wrapper">
-        {{selectedItems.length==dataSource.length}}
-        <table :class="{bordered,striped,compact}" class="gulu-table">
-            <thead>
+    <div class="gulu-table-wrapper" ref="wrapper">
+        <div :style="{ height:height }"  style="overflow: auto" >
+            <table :class="{bordered,striped,compact}" class="gulu-table"  ref="table" >
+                <thead>
                 <tr>
-                    <th><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked" type="checkbox"></th>
+                    <th><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked"
+                               type="checkbox"></th>
                     <th v-if="numberVisible">id</th>
                     <th v-for="(colum,index) of columns">
                         <div class="gulu-table-header">
                             {{colum.text}}
-                            <span @click="changeOrderBy(colum.field)" class="gulu-table-sorter" v-if="colum.field in orderBy">
-                                <g-icon :class="{active:orderBy[colum.field]=='asc'}" name="asc" ></g-icon>
-                                <g-icon :class="{active:orderBy[colum.field]=='desc'}" name="desc" ></g-icon>
+                            <span @click="changeOrderBy(colum.field)" class="gulu-table-sorter"
+                                  v-if="colum.field in orderBy">
+                                <g-icon :class="{active:orderBy[colum.field]=='asc'}" name="asc"></g-icon>
+                                <g-icon :class="{active:orderBy[colum.field]=='desc'}" name="desc"></g-icon>
                             </span>
                         </div>
                     </th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr v-for="(data,index) of dataSource">
                     <td><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
                                type="checkbox"
@@ -27,11 +29,13 @@
                         <td>{{data[colum.field]}}</td>
                     </template>
                 </tr>
-            </tbody>
-        </table>
-        <div class="gulu-table-loading" v-if="loading">
-            <g-icon name="loading"></g-icon>
+                </tbody>
+            </table>
+            <div class="gulu-table-loading" v-if="loading">
+                <g-icon name="loading"></g-icon>
+            </div>
         </div>
+
     </div>
 </template>
 
@@ -43,6 +47,9 @@
             GIcon
         },
         props: {
+            height: {
+                type:String
+            },
             loading: {
               type:Boolean,
               default: false
@@ -114,7 +121,31 @@
             }
 
         },
+        mounted (){
+            let table2 = this.$refs.table.cloneNode(true)
+            table2.classList.add('gulu-table-copy')
+            this.table2 = table2
+            Array.from(table2.children).map(node=>{
+                if(node.tagName.toLowerCase()!='thead'){
+                    node.remove()
+                }
+            })
+            this.updateHeadersWidth();
+            this.onWindowResize = ()=> this.updateHeadersWidth()
+            window.addEventListener('resize', this.onWindowResize)
+            this.$refs.wrapper.appendChild(table2)
+        },
+        beforeDestroy(){
+            window.removeEventListener('resize',this.onWindowResize)
+            this.table2.remove();
+        },
         methods:{
+            updateHeadersWidth(){
+                Array.from(this.$refs.table.querySelector('tr').children).forEach((node,i)=>{
+                    let { width } = node.getBoundingClientRect();
+                    this.table2.querySelector('tr').children[i].style.width = width+'px'
+                })
+            },
             changeOrderBy(key) {
                 let oldvalue = this.orderBy[key];
                 let newval = '';
@@ -248,7 +279,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: auto;
             background: white;
         }
 
