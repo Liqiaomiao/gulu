@@ -4,10 +4,10 @@
             <table :class="{bordered,striped,compact}" class="gulu-table"  ref="table" >
                 <thead>
                 <tr>
-                    <th><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked"
+                    <th width="50"><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked"
                                type="checkbox"></th>
-                    <th v-if="numberVisible">id</th>
-                    <th v-for="(colum,index) of columns">
+                    <th v-if="numberVisible" width="50">id</th>
+                    <th :width="colum.width" v-for="(colum,index) of columns">
                         <div class="gulu-table-header">
                             {{colum.text}}
                             <span @click="changeOrderBy(colum.field)" class="gulu-table-sorter"
@@ -21,12 +21,12 @@
                 </thead>
                 <tbody>
                 <tr v-for="(data,index) of dataSource">
-                    <td><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
+                    <td width="50"><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
                                type="checkbox"
                     ></td>
-                    <td v-if="numberVisible">{{index+1}}</td>
+                    <td v-if="numberVisible" width="50">{{index+1}}</td>
                     <template v-for="(colum,index) of columns ">
-                        <td>{{data[colum.field]}}</td>
+                        <td :width="colum.width" >{{data[colum.field]}}</td>
                     </template>
                 </tr>
                 </tbody>
@@ -122,7 +122,9 @@
 
         },
         mounted (){
-            let table2 = this.$refs.table.cloneNode(true)
+            let table2 = this.$refs.table.cloneNode(false)
+            console.log(this.$refs.table.children[0]);
+            table2.appendChild(this.$refs.table.children[0])
             table2.classList.add('gulu-table-copy')
             this.table2 = table2
             Array.from(table2.children).map(node=>{

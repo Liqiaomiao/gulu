@@ -30,7 +30,7 @@ export default {
             currentPage: 20,
             selectedItems:[],
             columns:[
-                {text:'姓名',field:'name'},
+                {text:'姓名',field:'name',width:100},
                 {text:'成绩',field:'score'},
                 ],
             sortRules:{
