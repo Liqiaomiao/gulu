@@ -4,7 +4,8 @@
             <table :class="{bordered,striped,compact}" class="gulu-table"  ref="table" >
                 <thead>
                 <tr>
-                    <th width="50"><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked"
+                    <th width="50"></th>
+                    <th width="50" ><input :checked="areAllItemsSelected" @change="onChangeAllItems" ref="allChecked"
                                type="checkbox"></th>
                     <th v-if="numberVisible" width="50">id</th>
                     <th :width="colum.width" v-for="(colum,index) of columns">
@@ -20,15 +21,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(data,index) of dataSource">
-                    <td width="50"><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
-                               type="checkbox"
-                    ></td>
-                    <td v-if="numberVisible" width="50">{{index+1}}</td>
-                    <template v-for="(colum,index) of columns ">
-                        <td :width="colum.width" >{{data[colum.field]}}</td>
-                    </template>
-                </tr>
+                <template v-for="(data,index) of dataSource">
+                    <tr >
+                        <th  width="50" > <g-icon @click="expendItem(data.id)" class="gulu-table-expendIcon" name="right" v-if="data[expendProp]"></g-icon></th>
+                        <td width="50"><input :checked="inSelectedItems(data)" @change="onChangeItem(data,$event)"
+                                              type="checkbox"
+                        ></td>
+                        <td v-if="numberVisible" width="50">{{index+1}}</td>
+                        <template v-for="(colum,index) of columns ">
+                            <td :width="colum.width" >{{data[colum.field]}}</td>
+                        </template>
+                    </tr>
+                    <tr v-if="isExpendedIds(data.id) && data[expendProp]">
+                        <td></td>
+                        <td :colspan="columns.length+1">
+                            {{ data[expendProp] }}
+                        </td>
+
+                    </tr>
+                </template>
+
                 </tbody>
             </table>
             <div class="gulu-table-loading" v-if="loading">
@@ -88,6 +100,14 @@
             selectedItems:{
                 type:Array,
                 default:()=>[]
+            },
+            expendProp:{
+                type: String,
+            }
+        },
+        data(){
+            return {
+                expendItems:[]
             }
         },
         watch:{
@@ -123,7 +143,8 @@
         },
         mounted (){
             let table2 = this.$refs.table.cloneNode(false)
-            console.log(this.$refs.table.children[0]);
+            let { height } = this.$refs.table.children[0].getBoundingClientRect();
+            this.$refs.table.style.marginTop = `${height}px`
             table2.appendChild(this.$refs.table.children[0])
             table2.classList.add('gulu-table-copy')
             this.table2 = table2
@@ -142,6 +163,17 @@
             this.table2.remove();
         },
         methods:{
+            isExpendedIds(id){
+                return this.expendItems.indexOf(id)>-1
+            },
+            expendItem(id){
+                if(this.isExpendedIds(id)){
+                    this.expendItems.splice(this.expendItems.indexOf(id),1)
+                }else{
+                    this.expendItems.push(id)
+                }
+
+            },
             updateHeadersWidth(){
                 Array.from(this.$refs.table.querySelector('tr').children).forEach((node,i)=>{
                     let { width } = node.getBoundingClientRect();
@@ -185,6 +217,10 @@
 <style scoped lang="scss">
     @import "var";
     $gray: darken($gray, 10%);
+    .gulu-table-wrapper{
+        border: 1px solid $gray;
+        border-left:0;
+    }
     .gulu-table {
         width: 100%;
         border-collapse: collapse;

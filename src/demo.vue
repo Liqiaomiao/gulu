@@ -10,6 +10,7 @@
                 striped
                 :loading="loading"
                 height="300px"
+                expend-prop = 'description'
         ></g-table>
         <g-pager :current-page.sync="currentPage" :total-page="20"></g-pager>
     </div>
@@ -38,7 +39,7 @@ export default {
                 score:'desc'
             },
             dataSource:[
-                {id:1,name:'方方',score:100},
+                {id:1,name:'方方',score:100,description:'happy new year'},
                 {id:2,name:'圆圆',score:99},
                 {id:3,name:'钢铁侠',score:100},
                 {id:4,name:'超人',score:99},
