@@ -11,7 +11,12 @@
                 :loading="loading"
                 height="300px"
                 expend-prop = 'description'
-        ></g-table>
+        >
+            <template  slot-scope="{ item }">
+                <g-button @click="edit(item)">编辑</g-button>
+                <g-button @click="check(item)">查看</g-button>
+            </template>
+        </g-table>
         <g-pager :current-page.sync="currentPage" :total-page="20"></g-pager>
     </div>
 </template>
@@ -25,6 +30,7 @@
 <script>
     import GPager from './pager/guluPager'
     import GTable from './table/table'
+    import GButton from  './button/Button'
 export default {
     data() {
         return {
@@ -32,7 +38,8 @@ export default {
             selectedItems:[],
             columns:[
                 {text:'姓名',field:'name',width:100},
-                {text:'成绩',field:'score'},
+                {text:'成绩',field:'score',width: 90},
+                {text:'操作',field:'slot',width:150}
                 ],
             sortRules:{
                 name:'asc',
@@ -52,8 +59,15 @@ export default {
 
         };
     },
-    components: {GPager,GTable},
+    components: {GPager,GTable, GButton},
     methods:{
+        edit(item){
+            console.log(item);
+            alert(item.id)
+        },
+        check(item){
+            alert(item.id)
+        },
         x(){/* 模拟ajax排序*/
             this.loading=true;
             this.dataSource = this.dataSource.sort((a,b)=>{

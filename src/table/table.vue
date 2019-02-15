@@ -29,8 +29,13 @@
                         ></td>
                         <td v-if="numberVisible" width="50">{{index+1}}</td>
                         <template v-for="(colum,index) of columns ">
-                            <td :width="colum.width" >{{data[colum.field]}}</td>
+                            <td :width="colum.width" v-if="colum.field === 'slot'" >
+                                <slot :item="data" ></slot>
+                            </td>
+                            <td :width="colum.width" v-else >{{data[colum.field]}}</td>
+
                         </template>
+
                     </tr>
                     <tr v-if="isExpendedIds(data.id) && data[expendProp]">
                         <td></td>
@@ -144,7 +149,7 @@
         mounted (){
             let table2 = this.$refs.table.cloneNode(false)
             let { height } = this.$refs.table.children[0].getBoundingClientRect();
-            this.$refs.table.style.marginTop = `${height}px`
+             this.$refs.table.style.marginTop = `${height}px`
             table2.appendChild(this.$refs.table.children[0])
             table2.classList.add('gulu-table-copy')
             this.table2 = table2
@@ -156,6 +161,7 @@
             this.updateHeadersWidth();
             this.onWindowResize = ()=> this.updateHeadersWidth()
             window.addEventListener('resize', this.onWindowResize)
+            console.log('wrapper',this.$refs.wrapper,'table2',table2);
             this.$refs.wrapper.appendChild(table2)
         },
         beforeDestroy(){
@@ -177,6 +183,7 @@
             updateHeadersWidth(){
                 Array.from(this.$refs.table.querySelector('tr').children).forEach((node,i)=>{
                     let { width } = node.getBoundingClientRect();
+                    console.log(this.table2.querySelector('tr').children[i]);
                     this.table2.querySelector('tr').children[i].style.width = width+'px'
                 })
             },
