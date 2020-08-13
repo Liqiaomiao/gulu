@@ -12,8 +12,8 @@
 
 <script>
     import cascaderItem from "./cascader-item.vue";
-    import clickOutside from '../click-outside'
-    import {removeListener} from '../click-outside'
+    import clickOutside from '../../click-outside'
+    import {removeListener} from '../../click-outside'
     export default {
         name: "GuluCascader",
         components: {

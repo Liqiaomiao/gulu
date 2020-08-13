@@ -5,7 +5,7 @@ import Vue from "vue";
 import plugin from "./plugin";
 
 Vue.use(plugin);
-import Demo from "@/demo.vue";
+import Demo from "@/example.vue";
 new Vue({
   render: h => h(Demo)
 }).$mount("#app");

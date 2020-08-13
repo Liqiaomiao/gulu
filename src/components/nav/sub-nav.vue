@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import clickOutside from '../click-outside'
-    import {removeListener} from '../click-outside'
+    import clickOutside from '../../click-outside'
+    import {removeListener} from '../../click-outside'
     import GIcon from '../icon/icon'
 
     export default {

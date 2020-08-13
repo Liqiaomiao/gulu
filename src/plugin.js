@@ -1,7 +1,7 @@
 /**
  * Created by Liqiaomiao on 2018/8/4.
  */
-import Toast from "./toast/toast.vue";
+import Toast from "./components/toast/toast.vue";
 let toastinit = "";
 export default {
   install(Vue, options) {

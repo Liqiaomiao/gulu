@@ -2,9 +2,9 @@ import chai, {expect} from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import {shallowMount, mount} from '@vue/test-utils'
-import Nav from '../../src/nav/nav'
-import NavItem from '../../src/nav/nav-item'
-import SubNav from '../../src/nav/sub-nav'
+import Nav from '../../src/components/nav/nav'
+import NavItem from '../../src/components/nav/nav-item'
+import SubNav from '../../src/components/nav/sub-nav'
 import Vue from 'vue'
 
 chai.use(sinonChai);

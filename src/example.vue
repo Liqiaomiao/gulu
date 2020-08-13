@@ -28,9 +28,9 @@
     }
 </style>
 <script>
-    import GPager from './pager/guluPager'
-    import GTable from './table/table'
-    import GButton from  './button/Button'
+    import GPager from './components/pager/guluPager'
+    import GTable from './components/table/table'
+    import GButton from './components/button/Button'
 export default {
     data() {
         return {
